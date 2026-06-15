@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -7,9 +7,29 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { ArrowRight, ShieldCheck, Banknote, Wrench, Sparkles, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { supabase } from "@/integrations/supabase/client";
+import { CarDetailsDialog } from "@/components/CarDetailsDialog";
+import { PHP } from "@/lib/format";
+import type { Tables } from "@/integrations/supabase/types";
 
 import heroCars from "@/assets/hero-cars.png";
 import BrandMarquee from "@/components/BrandMarquee";
+
+type Car = Tables<"cars">;
+
+const CATEGORIES = ["All", "Minivans", "Pickups", "Hatchbacks", "Sedans", "SUV's", "MPV's", "Trucks"] as const;
+type Category = (typeof CATEGORIES)[number];
+
+const CATEGORY_KEYWORDS: Record<Exclude<Category, "All">, string[]> = {
+  "Minivans": ["minivan", "van", "carnival", "alphard", "hiace", "starex", "urvan"],
+  "Pickups": ["pickup", "hilux", "ranger", "navara", "strada", "d-max", "dmax", "colorado", "frontier"],
+  "Hatchbacks": ["hatchback", "wigo", "swift", "yaris", "mirage", "jazz", "brio", "picanto", "i10"],
+  "Sedans": ["sedan", "vios", "city", "civic", "altis", "corolla", "accent", "camry", "accord"],
+  "SUV's": ["suv", "fortuner", "everest", "montero", "mu-x", "trailblazer", "rush", "terra", "rav4", "cr-v", "crv"],
+  "MPV's": ["mpv", "innova", "xpander", "ertiga", "avanza", "bR-v", "br-v", "veloz"],
+  "Trucks": ["truck", "canter", "elf", "forland", "fuso", "isuzu n-series"],
+};
 
 type AiSearchResponse = {
   reply?: string;

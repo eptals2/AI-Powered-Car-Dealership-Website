@@ -13,7 +13,7 @@ import { CarDetailsDialog } from "@/components/CarDetailsDialog";
 import { PHP } from "@/lib/format";
 import type { Tables } from "@/integrations/supabase/types";
 
-const heroCars = "/hero-cars.png";
+const heroCars = "hero-cars.png";
 import BrandMarquee from "@/components/BrandMarquee";
 
 type Car = Tables<"cars">;
@@ -110,43 +110,19 @@ function Index() {
         <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent pointer-events-none" />
         <div className="container mx-auto px-4 py-16 md:py-24 relative">
           <div className="grid items-center gap-10 md:gap-6 md:grid-cols-[1fr_auto_1fr]">
-            {/* Left: existing hero */}
-            <div>
-              <Badge className="mb-5 bg-white/10 text-white hover:bg-white/15 border-0">Trusted dealership</Badge>
-              <h1 className="font-display text-5xl md:text-6xl leading-[0.95]">
-                GET YOUR<br /><span className="text-primary-foreground/95 [text-shadow:0_0_40px_oklch(0.65_0.24_27_/_0.6)]">DREAM CAR</span> TODAY
-              </h1>
-              <p className="mt-6 text-base md:text-lg text-white/80 max-w-xl">
-                Browse premium vehicles with flexible payment options tailored to your budget. Drive home today.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Button size="lg" asChild className="shadow-[var(--shadow-glow)]">
-                  <a href="/cars">Get now<ArrowRight className="ml-2 h-4 w-4" /></a>
-                </Button>
-                {/* <Button size="lg" asChild className="bg-white text-slate-950 hover:bg-slate-100">
-                  <a href="/made-to-order">Made to Order</a>
-                </Button> */}
-              </div>
-            </div>
 
-            {/* OR divider */}
-            <div className="flex md:flex-col items-center justify-center gap-3 md:h-full" aria-hidden>
-              <div className="h-px w-16 md:h-24 md:w-px bg-white/30" />
-              <span className="font-display text-2xl text-white/80">OR</span>
-              <div className="h-px w-16 md:h-24 md:w-px bg-white/30" />
-            </div>
 
             {/* Right: AI search */}
-            <div className="md:text-right">
+            <div className="md:text-left">
               <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full bg-white/10 text-xs font-medium">
                 <Sparkles className="h-3.5 w-3.5" /> AI-powered
               </div>
               <h2 className="font-display text-4xl md:text-5xl leading-[1.05]">
-                Find Your<br />Next Car with <span className="text-primary-foreground/95 [text-shadow:0_0_40px_oklch(0.65_0.24_27_/_0.6)]">AI</span>
+                Chat Now<br />to Get your Dream Car  <span className="text-primary-foreground/95 [text-shadow:0_0_40px_oklch(0.65_0.24_27_/_0.6)]"></span>
               </h2>
               <form
                 onSubmit={(e) => { e.preventDefault(); handleAiSubmit(); }}
-                className="mt-6 flex flex-col gap-2"
+                className="mt-0 flex flex-col gap-2"
               >
                 <div className="relative">
                   <Input
@@ -166,11 +142,8 @@ function Index() {
                     {aiLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <ArrowRight className="h-4 w-4" />}
                   </button>
                 </div>
-                <div className="text-sm text-white/70 md:text-right">
-                  Ask our AI about any vehicle
-                </div>
-                <div className="flex flex-wrap gap-2 md:justify-end">
-                  {["Show me SUVs under 800k", "Best family car", "Cheapest available"].map((s) => (
+                <div className="flex flex-wrap gap-2 md:justify-start">
+                  {["Cheapest available", "Financing Options", "Best family car"].map((s) => (
                     <button
                       key={s}
                       type="button"
@@ -183,12 +156,6 @@ function Index() {
                   ))}
                 </div>
               </form>
-
-              {aiReply && (
-                <div className="mt-4 rounded-xl bg-white/95 text-foreground p-4 text-left text-sm whitespace-pre-wrap shadow-lg max-h-64 overflow-auto">
-                  {aiReply}
-                </div>
-              )}
             </div>
           </div>
         </div>
@@ -196,6 +163,11 @@ function Index() {
       </section>
 
       {/* Featured Cars */}
+      {aiReply && (
+        <div className="mt-4 rounded-xl bg-white/95 text-foreground p-4 text-left text-sm whitespace-pre-wrap shadow-lg max-h-64 overflow-auto">
+          {aiReply}
+        </div>
+      )}
       <section id="featured" className="container mx-auto px-4 py-16">
         <div className="flex items-end justify-between mb-6 flex-wrap gap-4">
           <div>
@@ -211,11 +183,10 @@ function Index() {
               key={cat}
               type="button"
               onClick={() => setCategory(cat)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition border ${
-                category === cat
-                  ? "bg-primary text-primary-foreground border-primary shadow-[var(--shadow-glow)]"
-                  : "bg-card text-foreground border-border hover:bg-muted"
-              }`}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition border ${category === cat
+                ? "bg-primary text-primary-foreground border-primary shadow-[var(--shadow-glow)]"
+                : "bg-card text-foreground border-border hover:bg-muted"
+                }`}
             >
               {cat}
             </button>

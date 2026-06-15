@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -7,9 +7,29 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { ArrowRight, ShieldCheck, Banknote, Wrench, Sparkles, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { supabase } from "@/integrations/supabase/client";
+import { CarDetailsDialog } from "@/components/CarDetailsDialog";
+import { PHP } from "@/lib/format";
+import type { Tables } from "@/integrations/supabase/types";
 
 import heroCars from "@/assets/hero-cars.png";
 import BrandMarquee from "@/components/BrandMarquee";
+
+type Car = Tables<"cars">;
+
+const CATEGORIES = ["All", "Minivans", "Pickups", "Hatchbacks", "Sedans", "SUV's", "MPV's", "Trucks"] as const;
+type Category = (typeof CATEGORIES)[number];
+
+const CATEGORY_KEYWORDS: Record<Exclude<Category, "All">, string[]> = {
+  "Minivans": ["minivan", "van", "carnival", "alphard", "hiace", "starex", "urvan"],
+  "Pickups": ["pickup", "hilux", "ranger", "navara", "strada", "d-max", "dmax", "colorado", "frontier"],
+  "Hatchbacks": ["hatchback", "wigo", "swift", "yaris", "mirage", "jazz", "brio", "picanto", "i10"],
+  "Sedans": ["sedan", "vios", "city", "civic", "altis", "corolla", "accent", "camry", "accord"],
+  "SUV's": ["suv", "fortuner", "everest", "montero", "mu-x", "trailblazer", "rush", "terra", "rav4", "cr-v", "crv"],
+  "MPV's": ["mpv", "innova", "xpander", "ertiga", "avanza", "bR-v", "br-v", "veloz"],
+  "Trucks": ["truck", "canter", "elf", "forland", "fuso", "isuzu n-series"],
+};
 
 type AiSearchResponse = {
   reply?: string;
@@ -22,6 +42,30 @@ function Index() {
   const [aiQuery, setAiQuery] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const [aiReply, setAiReply] = useState<string | null>(null);
+  const [cars, setCars] = useState<Car[]>([]);
+  const [carsLoading, setCarsLoading] = useState(true);
+  const [category, setCategory] = useState<Category>("All");
+  const [selected, setSelected] = useState<Car | null>(null);
+
+  useEffect(() => {
+    supabase
+      .from("cars")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .then(({ data }) => {
+        setCars(data ?? []);
+        setCarsLoading(false);
+      });
+  }, []);
+
+  const filteredCars = useMemo(() => {
+    if (category === "All") return cars;
+    const keys = CATEGORY_KEYWORDS[category];
+    return cars.filter((c) => {
+      const hay = `${c.name} ${c.description ?? ""}`.toLowerCase();
+      return keys.some((k) => hay.includes(k));
+    });
+  }, [cars, category]);
 
   const handleAiSubmit = async (q?: string) => {
     const query = (q ?? aiQuery).trim();
@@ -150,6 +194,79 @@ function Index() {
         </div>
         <div className="pointer-events-none absolute -right-32 -bottom-32 h-96 w-96 rounded-full bg-primary/30 blur-3xl" />
       </section>
+
+      {/* Featured Cars */}
+      <section id="featured" className="container mx-auto px-4 py-16">
+        <div className="flex items-end justify-between mb-6 flex-wrap gap-4">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Featured</div>
+            <h2 className="font-display text-4xl md:text-5xl">Featured Cars</h2>
+          </div>
+          <Button asChild variant="outline"><a href="/cars">View all<ArrowRight className="ml-2 h-4 w-4" /></a></Button>
+        </div>
+
+        <div className="flex flex-wrap gap-2 mb-8">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => setCategory(cat)}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition border ${
+                category === cat
+                  ? "bg-primary text-primary-foreground border-primary shadow-[var(--shadow-glow)]"
+                  : "bg-card text-foreground border-border hover:bg-muted"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {carsLoading ? (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="h-[380px] rounded-lg bg-muted animate-pulse" />
+            ))}
+          </div>
+        ) : filteredCars.length === 0 ? (
+          <p className="text-center py-12 text-muted-foreground">No cars in this category yet.</p>
+        ) : (
+          <Carousel opts={{ align: "start", loop: false }} className="w-full">
+            <CarouselContent className="-ml-4">
+              {filteredCars.map((c) => {
+                const imgs = (c.images && c.images.length > 0) ? c.images : (c.image_url ? [c.image_url] : []);
+                return (
+                  <CarouselItem key={c.id} className="pl-4 sm:basis-1/2 lg:basis-1/3">
+                    <article className="group h-full overflow-hidden rounded-lg border bg-card shadow-[var(--shadow-card)] transition hover:-translate-y-1 hover:shadow-[var(--shadow-glow)]">
+                      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                        {imgs.length > 0 ? (
+                          <img src={imgs[0]} alt={c.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+                        ) : (
+                          <div className="flex h-full items-center justify-center text-muted-foreground">No image</div>
+                        )}
+                        {c.status === "out_of_stock" && (
+                          <Badge variant="destructive" className="absolute top-3 left-3">Out of Stock</Badge>
+                        )}
+                      </div>
+                      <div className="p-5">
+                        <h3 className="font-display text-xl truncate">{c.name}</h3>
+                        <div className="mt-1 text-2xl font-semibold text-primary">{PHP(Number(c.price))}</div>
+                        <Button className="mt-4 w-full" variant="secondary" onClick={() => setSelected(c)}>
+                          Get this
+                        </Button>
+                      </div>
+                    </article>
+                  </CarouselItem>
+                );
+              })}
+            </CarouselContent>
+            <CarouselPrevious className="-left-4" />
+            <CarouselNext className="-right-4" />
+          </Carousel>
+        )}
+      </section>
+
+      <CarDetailsDialog car={selected} open={!!selected} onOpenChange={(v) => !v && setSelected(null)} />
 
       {/* Why */}
       <section id="why" className="container mx-auto px-4 py-16 grid gap-6 md:grid-cols-3">

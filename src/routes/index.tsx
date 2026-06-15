@@ -79,7 +79,6 @@ function Index() {
                 <Button size="lg" asChild className="shadow-[var(--shadow-glow)]">
                   <a href="/cars">Get now<ArrowRight className="ml-2 h-4 w-4" /></a>
                 </Button>
-                </Button>
                 <Button size="lg" asChild className="bg-white text-slate-950 hover:bg-slate-100">
                   <a href="/made-to-order">Made to Order</a>
                 </Button>

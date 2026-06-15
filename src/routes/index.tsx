@@ -1,32 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { CarDetailsDialog } from "@/components/CarDetailsDialog";
-import { PHP } from "@/lib/format";
-import type { Tables } from "@/integrations/supabase/types";
-import { ArrowRight, ShieldCheck, Banknote, Wrench, Search, Sparkles, Loader2 } from "lucide-react";
+import { ArrowRight, ShieldCheck, Banknote, Wrench, Sparkles, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 import heroCars from "@/assets/hero-cars.png";
 import BrandMarquee from "@/components/BrandMarquee";
-
-type Car = Tables<"cars">;
 
 type AiSearchResponse = {
   reply?: string;
@@ -36,14 +19,6 @@ type AiSearchResponse = {
 export const Route = createFileRoute("/")({ component: Index });
 
 function Index() {
-  const [cars, setCars] = useState<Car[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [selected, setSelected] = useState<Car | null>(null);
-  const [sort, setSort] = useState<"newest" | "price_asc" | "price_desc">("price_asc");
-  const [page, setPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState("");
-  const ITEMS_PER_PAGE = 9;
-
   const [aiQuery, setAiQuery] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const [aiReply, setAiReply] = useState<string | null>(null);

@@ -47,12 +47,6 @@ function Index() {
     }
   };
 
-  useEffect(() => {
-    supabase.from("cars").select("*").order("created_at", { ascending: false }).then(({ data }) => {
-      setCars(data ?? []);
-      setLoading(false);
-    });
-  }, []);
 
   return (
     <div className="min-h-screen bg-background">

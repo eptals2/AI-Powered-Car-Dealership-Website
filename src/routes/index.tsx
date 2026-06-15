@@ -13,7 +13,7 @@ import { CarDetailsDialog } from "@/components/CarDetailsDialog";
 import { PHP } from "@/lib/format";
 import type { Tables } from "@/integrations/supabase/types";
 
-import heroCars from "@/assets/hero-cars.png";
+const heroCars = "/hero-cars.png";
 import BrandMarquee from "@/components/BrandMarquee";
 
 type Car = Tables<"cars">;
@@ -123,9 +123,9 @@ function Index() {
                 <Button size="lg" asChild className="shadow-[var(--shadow-glow)]">
                   <a href="/cars">Get now<ArrowRight className="ml-2 h-4 w-4" /></a>
                 </Button>
-                <Button size="lg" asChild className="bg-white text-slate-950 hover:bg-slate-100">
+                {/* <Button size="lg" asChild className="bg-white text-slate-950 hover:bg-slate-100">
                   <a href="/made-to-order">Made to Order</a>
-                </Button>
+                </Button> */}
               </div>
             </div>
 

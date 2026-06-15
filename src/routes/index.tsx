@@ -42,6 +42,30 @@ function Index() {
   const [aiQuery, setAiQuery] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const [aiReply, setAiReply] = useState<string | null>(null);
+  const [cars, setCars] = useState<Car[]>([]);
+  const [carsLoading, setCarsLoading] = useState(true);
+  const [category, setCategory] = useState<Category>("All");
+  const [selected, setSelected] = useState<Car | null>(null);
+
+  useEffect(() => {
+    supabase
+      .from("cars")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .then(({ data }) => {
+        setCars(data ?? []);
+        setCarsLoading(false);
+      });
+  }, []);
+
+  const filteredCars = useMemo(() => {
+    if (category === "All") return cars;
+    const keys = CATEGORY_KEYWORDS[category];
+    return cars.filter((c) => {
+      const hay = `${c.name} ${c.description ?? ""}`.toLowerCase();
+      return keys.some((k) => hay.includes(k));
+    });
+  }, [cars, category]);
 
   const handleAiSubmit = async (q?: string) => {
     const query = (q ?? aiQuery).trim();

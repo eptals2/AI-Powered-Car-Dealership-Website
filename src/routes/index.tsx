@@ -23,9 +23,9 @@ type Category = (typeof CATEGORIES)[number];
 
 const CATEGORY_KEYWORDS: Record<Category, string[]> = {
   "Minivan": ["minivan", "van", "carnival", "alphard", "hiace", "starex", "urvan"],
-  "Minipickup": ["minipickup", "mini pickup", "mini-pickup"],
+  "Minipickup": ["minipickup", "mini-pickup"],
   "Sedan": ["sedan", "vios", "city", "civic", "altis", "corolla", "accent", "camry", "accord"],
-  "Pickup": ["pickup", "hilux", "ranger", "navara", "strada", "d-max", "dmax", "colorado", "frontier"],
+  "Pickup": ["pickup/truck", "hilux", "ranger", "navara", "strada", "d-max", "dmax", "colorado", "frontier"],
   "Hatchback": ["hatchback", "wigo", "swift", "yaris", "mirage", "jazz", "brio", "picanto", "i10"],
   "SUV": ["suv", "fortuner", "everest", "montero", "mu-x", "trailblazer", "rush", "terra", "rav4", "cr-v", "crv"],
   "MPV": ["mpv", "innova", "xpander", "ertiga", "avanza", "br-v", "veloz"],
@@ -174,7 +174,7 @@ function Index() {
         <div className="flex items-end justify-between mb-6 flex-wrap gap-4">
           <div>
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Featured</div>
-            <h2 className="font-display text-4xl md:text-5xl">Featured Cars</h2>
+            <h2 className="font-display text-4xl md:text-5xl">Units </h2>
           </div>
           <Button asChild variant="outline"><a href="/cars">View all<ArrowRight className="ml-2 h-4 w-4" /></a></Button>
         </div>

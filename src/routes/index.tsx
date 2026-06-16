@@ -44,6 +44,7 @@ function Index() {
   const [aiQuery, setAiQuery] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const [aiReply, setAiReply] = useState<string | null>(null);
+  const [aiCars, setAiCars] = useState<Car[]>([]);
   const [cars, setCars] = useState<Car[]>([]);
   const [carsLoading, setCarsLoading] = useState(true);
   const [selected, setSelected] = useState<Car | null>(null);
@@ -77,6 +78,7 @@ function Index() {
     setAiQuery(query);
     setAiLoading(true);
     setAiReply(null);
+    setAiCars([]);
     try {
       const response = await fetch("/api/ai-car-search", {
         method: "POST",
@@ -88,6 +90,7 @@ function Index() {
       if (!response.ok) throw new Error(payload.error ?? "AI unavailable");
 
       setAiReply(payload.reply ?? "Sorry, no answer.");
+      setAiCars(payload.cars ?? []);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "AI unavailable");
     } finally {
@@ -164,8 +167,40 @@ function Index() {
 
       {/* Featured Cars */}
       {aiReply && (
-        <div className="mt-4 rounded-xl bg-white/95 text-foreground p-4 text-left text-sm whitespace-pre-wrap shadow-lg max-h-64 overflow-auto">
-          {aiReply}
+        <div className="container mx-auto px-4 mt-6">
+          <div className="rounded-xl bg-card border text-foreground p-5 text-left shadow-lg">
+            <div className="flex items-center gap-2 mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              <Sparkles className="h-3.5 w-3.5" /> AI Recommendation
+            </div>
+            <p className="text-sm whitespace-pre-wrap mb-4">{aiReply}</p>
+            {aiCars.length > 0 && (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                {aiCars.map((car) => {
+                  const imgs = (car.images && car.images.length > 0) ? car.images : (car.image_url ? [car.image_url] : []);
+                  return (
+                    <button
+                      key={car.id}
+                      type="button"
+                      onClick={() => setSelected(car)}
+                      className="group text-left overflow-hidden rounded-lg border bg-background shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                    >
+                      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                        {imgs.length > 0 ? (
+                          <img src={imgs[0]} alt={car.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+                        ) : (
+                          <div className="flex h-full items-center justify-center text-muted-foreground text-sm">No image</div>
+                        )}
+                      </div>
+                      <div className="p-3">
+                        <div className="font-medium text-sm truncate">{car.name}</div>
+                        <div className="text-xs text-muted-foreground mt-0.5">PHP {Number(car.price).toLocaleString()}</div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
       )}
       <section id="featured" className="container mx-auto px-4 py-16">

@@ -118,16 +118,16 @@ function Index() {
         <div className="container mx-auto px-4 py-16 md:py-24 relative">
           <div className="grid items-center gap-10 md:gap-6 md:grid-cols-[1fr_auto_1fr]">
 
-
             {/* Right: AI search */}
             <div className="md:text-left">
               <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full bg-white/10 text-xs font-medium">
                 <Sparkles className="h-3.5 w-3.5" /> AI-powered
               </div>
               <h2 className="font-display text-4xl md:text-5xl leading-[1.05]">
-                Need help in getting your Dream Car?
+                Need help in getting your 
                 <br />
                 <span className="text-primary-foreground/95 [text-shadow:0_0_40px_oklch(0.65_0.24_27_/_0.6)]">
+                  Dream Car?
                 </span>
               </h2>
               <form
@@ -156,13 +156,9 @@ function Index() {
                   <TypingPrompt onSubmit={handleAiSubmit} disabled={aiLoading} />
                 </div>
               </form>
-              <div className="mt-5 flex justify-end">
-                <Button asChild className="bg-red-600 text-white hover:bg-red-700 w-50"><a href="/cars">View all Cars<ArrowRight className="ml-2 h-4 w-4" /></a></Button>
-              </div>
             </div>
           </div>
         </div>
-        <div className="pointer-events-none absolute -right-32 -bottom-32 h-96 w-96 rounded-full bg-primary/30 blur-3xl" />
       </section>
 
       {/* Featured Cars */}
@@ -203,7 +199,7 @@ function Index() {
           </div>
         </div>
       )}
-      <section id="featured" className="container mx-auto px-4 py-16">
+      {/* <section id="featured" className="container mx-auto px-4 py-16">
         <div className="flex items-end justify-between mb-6 flex-wrap gap-4">
           <div>
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Featured</div>
@@ -256,7 +252,7 @@ function Index() {
         )}
       </section>
 
-      <CarDetailsDialog car={selected} open={!!selected} onOpenChange={(v) => !v && setSelected(null)} />
+      <CarDetailsDialog car={selected} open={!!selected} onOpenChange={(v) => !v && setSelected(null)} /> */}
 
       {/* Why */}
       <section id="why" className="container mx-auto px-4 py-16 grid gap-6 md:grid-cols-3">

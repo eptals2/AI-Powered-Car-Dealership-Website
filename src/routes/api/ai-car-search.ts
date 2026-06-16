@@ -52,7 +52,7 @@ export const Route = createFileRoute("/api/ai-car-search")({
             Authorization: `Bearer ${apiKey}`,
           },
           body: JSON.stringify({
-            model: "gemini-2.5-flash",
+            model: "gemini-2.5-flash-lite",
             response_format: { type: "json_object" },
             messages: [
               {

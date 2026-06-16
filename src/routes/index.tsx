@@ -33,8 +33,10 @@ const CATEGORY_KEYWORDS: Record<Category, string[]> = {
 
 type AiSearchResponse = {
   reply?: string;
+  cars?: Car[];
   error?: string;
 };
+
 
 export const Route = createFileRoute("/")({ component: Index });
 

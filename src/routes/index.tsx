@@ -18,17 +18,18 @@ import BrandMarquee from "@/components/BrandMarquee";
 
 type Car = Tables<"cars">;
 
-const CATEGORIES = ["All", "Minivans", "Pickups", "Hatchbacks", "Sedans", "SUV's", "MPV's", "Trucks"] as const;
+const CATEGORIES = ["Minivan", "Minipickup", "Sedan", "Pickup", "Hatchback", "SUV", "MPV", "LCV"] as const;
 type Category = (typeof CATEGORIES)[number];
 
-const CATEGORY_KEYWORDS: Record<Exclude<Category, "All">, string[]> = {
-  "Minivans": ["minivan", "van", "carnival", "alphard", "hiace", "starex", "urvan"],
-  "Pickups": ["pickup", "hilux", "ranger", "navara", "strada", "d-max", "dmax", "colorado", "frontier"],
-  "Hatchbacks": ["hatchback", "wigo", "swift", "yaris", "mirage", "jazz", "brio", "picanto", "i10"],
-  "Sedans": ["sedan", "vios", "city", "civic", "altis", "corolla", "accent", "camry", "accord"],
-  "SUV's": ["suv", "fortuner", "everest", "montero", "mu-x", "trailblazer", "rush", "terra", "rav4", "cr-v", "crv"],
-  "MPV's": ["mpv", "innova", "xpander", "ertiga", "avanza", "bR-v", "br-v", "veloz"],
-  "Trucks": ["truck", "canter", "elf", "forland", "fuso", "isuzu n-series"],
+const CATEGORY_KEYWORDS: Record<Category, string[]> = {
+  "Minivan": ["minivan", "van", "carnival", "alphard", "hiace", "starex", "urvan"],
+  "Minipickup": ["minipickup", "mini pickup", "mini-pickup"],
+  "Sedan": ["sedan", "vios", "city", "civic", "altis", "corolla", "accent", "camry", "accord"],
+  "Pickup": ["pickup", "hilux", "ranger", "navara", "strada", "d-max", "dmax", "colorado", "frontier"],
+  "Hatchback": ["hatchback", "wigo", "swift", "yaris", "mirage", "jazz", "brio", "picanto", "i10"],
+  "SUV": ["suv", "fortuner", "everest", "montero", "mu-x", "trailblazer", "rush", "terra", "rav4", "cr-v", "crv"],
+  "MPV": ["mpv", "innova", "xpander", "ertiga", "avanza", "br-v", "veloz"],
+  "LCV": ["lcv", "light commercial", "truck", "canter", "elf", "forland", "fuso", "n-series"],
 };
 
 type AiSearchResponse = {

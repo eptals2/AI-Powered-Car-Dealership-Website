@@ -59,13 +59,14 @@ function Index() {
   }, []);
 
   const featured = useMemo(() => {
+    const inStock = cars.filter((c) => c.status !== "out_of_stock");
     const matchCategory = (c: Car, cat: Category) => {
       const hay = `${c.name} ${c.description ?? ""}`.toLowerCase();
       return CATEGORY_KEYWORDS[cat].some((k) => hay.includes(k));
     };
     return CATEGORIES.map((cat) => ({
       category: cat,
-      car: cars.find((c) => matchCategory(c, cat)) ?? null,
+      car: inStock.find((c) => matchCategory(c, cat)) ?? null,
     }));
   }, [cars]);
 

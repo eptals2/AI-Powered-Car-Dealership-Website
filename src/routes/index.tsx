@@ -121,7 +121,10 @@ function Index() {
                 <Sparkles className="h-3.5 w-3.5" /> AI-powered
               </div>
               <h2 className="font-display text-4xl md:text-5xl leading-[1.05]">
-                Chat Now<br />to Get your Dream Car  <span className="text-primary-foreground/95 [text-shadow:0_0_40px_oklch(0.65_0.24_27_/_0.6)]"></span>
+                  Need help in getting your Dream Car?
+                <br/>
+                <span className="text-primary-foreground/95 [text-shadow:0_0_40px_oklch(0.65_0.24_27_/_0.6)]">
+                </span>
               </h2>
               <form
                 onSubmit={(e) => { e.preventDefault(); handleAiSubmit(); }}
@@ -131,7 +134,7 @@ function Index() {
                   <Input
                     value={aiQuery}
                     onChange={(e) => setAiQuery(e.target.value)}
-                    placeholder="Do you need help in getting your dream car?"
+                    placeholder="Ask me now!"
                     className="h-12 pr-12 rounded-full bg-white/95 text-foreground placeholder:text-muted-foreground border-0"
                     disabled={aiLoading}
                   />
@@ -146,7 +149,9 @@ function Index() {
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-2 md:justify-start">
-                  {["Cheapest available", "Financing Options", "Best family car"].map((s) => (
+                  {["Cheapest available", "Financing Options", "Best family car",
+                    "Most fuel-efficient", "Freebies" , "Discounts", 
+                    "SUV", "Sedan", "Minivan", "Minipickup", "Pickup", "Light Commercial"].map((s) => (
                     <button
                       key={s}
                       type="button"
@@ -158,6 +163,7 @@ function Index() {
                     </button>
                   ))}
                 </div>
+                <Button asChild className="bg-red-600 text-white hover:bg-red-700 w-50"><a href="/cars">View all Cars<ArrowRight className="ml-2 h-4 w-4" /></a></Button>
               </form>
             </div>
           </div>

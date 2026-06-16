@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -10,11 +9,11 @@ import { toast } from "sonner";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { supabase } from "@/integrations/supabase/client";
 import { CarDetailsDialog } from "@/components/CarDetailsDialog";
-import { PHP } from "@/lib/format";
 import type { Tables } from "@/integrations/supabase/types";
 
 const heroCars = "hero-cars.png";
 import BrandMarquee from "@/components/BrandMarquee";
+import { TypingPrompt } from "@/components/FaqTypings";
 
 type Car = Tables<"cars">;
 
@@ -149,21 +148,7 @@ function Index() {
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-2 md:justify-start">
-                  {["Cheapest available", "Financing Options", "Best family car",
-                    "Most fuel-efficient", "Freebies", "Discounts",
-                    "SUV", "Sedan", "Minivan", "Minipickup", "Pickup", "Light Commercial",
-                    "Hatchback", "MPV"
-                  ].map((s) => (
-                      <button
-                        key={s}
-                        type="button"
-                        onClick={() => handleAiSubmit(s)}
-                        disabled={aiLoading}
-                        className="text-xs px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 transition disabled:opacity-50"
-                      >
-                        {s}
-                      </button>
-                    ))}
+                  <TypingPrompt onSubmit={handleAiSubmit} disabled={aiLoading} />
                 </div>
               </form>
               <div className="mt-5 flex justify-end">
@@ -256,27 +241,6 @@ function Index() {
       {/* Brands */}
       <section id="brands" className="container mx-auto px-4">
         <BrandMarquee />
-      </section>
-
-      <section id="faq" className="container mx-auto px-4 py-16">
-        <div className="mb-10">
-          <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">FAQ</div>
-          <h2 className="font-display text-4xl md:text-5xl">Frequently Asked Questions</h2>
-        </div>
-        <div className="grid gap-6 md:grid-cols-2">
-          {[
-            { q: "Do you offer financing for all car types?", a: "Yes, we provide flexible financing options for most cars, including sedans, SUVs, pickups, and light commercial vehicles." },
-            { q: "How do I schedule a test drive?", a: "Click on any car listing and use the contact details provided or submit a request through our website to book a test drive." },
-            { q: "Are the prices negotiable?", a: "Our prices are competitive, and we can often work with you to find a deal that fits your budget." },
-            { q: "What documents do I need to buy a car?", a: "Typically, you need a valid ID, proof of address, and income documents for financing applications." },
-            { q: "Do you provide after-sales support?", a: "Yes, we offer after-sales care and service guidance to help keep your new car running smoothly." },
-          ].map(({ q, a }) => (
-            <div key={q} className="rounded-xl border bg-card p-6 shadow-[var(--shadow-card)]">
-              <h3 className="font-display text-2xl">{q}</h3>
-              <p className="mt-3 text-sm text-muted-foreground">{a}</p>
-            </div>
-          ))}
-        </div>
       </section>
 
       <section id="contact">

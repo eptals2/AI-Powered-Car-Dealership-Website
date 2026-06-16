@@ -179,56 +179,40 @@ function Index() {
           <Button asChild variant="outline"><a href="/cars">View all<ArrowRight className="ml-2 h-4 w-4" /></a></Button>
         </div>
 
-        <div className="flex flex-wrap gap-2 mb-8">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => setCategory(cat)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition border ${category === cat
-                ? "bg-primary text-primary-foreground border-primary shadow-[var(--shadow-glow)]"
-                : "bg-card text-foreground border-border hover:bg-muted"
-                }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
         {carsLoading ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="h-[380px] rounded-lg bg-muted animate-pulse" />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="h-[320px] rounded-lg bg-muted animate-pulse" />
             ))}
           </div>
-        ) : filteredCars.length === 0 ? (
-          <p className="text-center py-12 text-muted-foreground">No cars in this category yet.</p>
         ) : (
-          <Carousel opts={{ align: "start", loop: false }} className="w-full">
+          <Carousel opts={{ align: "start", loop: true }} className="w-full">
             <CarouselContent className="-ml-4">
-              {filteredCars.map((c) => {
-                const imgs = (c.images && c.images.length > 0) ? c.images : (c.image_url ? [c.image_url] : []);
+              {featured.map(({ category, car }) => {
+                const imgs = car ? ((car.images && car.images.length > 0) ? car.images : (car.image_url ? [car.image_url] : [])) : [];
                 return (
-                  <CarouselItem key={c.id} className="pl-4 sm:basis-1/2 lg:basis-1/3">
-                    <article className="group h-full overflow-hidden rounded-lg border bg-card shadow-[var(--shadow-card)] transition hover:-translate-y-1 hover:shadow-[var(--shadow-glow)]">
+                  <CarouselItem key={category} className="pl-4 basis-1/2 sm:basis-1/3 lg:basis-1/4">
+                    <button
+                      type="button"
+                      onClick={() => car && setSelected(car)}
+                      disabled={!car}
+                      className="group relative block w-full h-full overflow-hidden rounded-lg border bg-card shadow-[var(--shadow-card)] transition hover:-translate-y-1 hover:shadow-[var(--shadow-glow)] disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
                       <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                         {imgs.length > 0 ? (
-                          <img src={imgs[0]} alt={c.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+                          <img src={imgs[0]} alt={`${category} - ${car?.name ?? ""}`} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
                         ) : (
-                          <div className="flex h-full items-center justify-center text-muted-foreground">No image</div>
+                          <div className="flex h-full items-center justify-center text-muted-foreground text-sm">No {category} yet</div>
                         )}
-                        {c.status === "out_of_stock" && (
-                          <Badge variant="destructive" className="absolute top-3 left-3">Out of Stock</Badge>
-                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/10 to-transparent" />
+                        <div className="absolute bottom-3 left-4 right-4 text-left">
+                          <div className="font-display text-2xl md:text-3xl text-foreground drop-shadow">{category}</div>
+                          {car && (
+                            <div className="mt-1 text-sm text-muted-foreground truncate">{car.name}</div>
+                          )}
+                        </div>
                       </div>
-                      <div className="p-5">
-                        <h3 className="font-display text-xl truncate">{c.name}</h3>
-                        <div className="mt-1 text-2xl font-semibold text-primary">{PHP(Number(c.price))}</div>
-                        <Button className="mt-4 w-full" variant="secondary" onClick={() => setSelected(c)}>
-                          Get this
-                        </Button>
-                      </div>
-                    </article>
+                    </button>
                   </CarouselItem>
                 );
               })}

@@ -45,7 +45,6 @@ function Index() {
   const [aiReply, setAiReply] = useState<string | null>(null);
   const [cars, setCars] = useState<Car[]>([]);
   const [carsLoading, setCarsLoading] = useState(true);
-  const [category, setCategory] = useState<Category>("All");
   const [selected, setSelected] = useState<Car | null>(null);
 
   useEffect(() => {
@@ -59,14 +58,16 @@ function Index() {
       });
   }, []);
 
-  const filteredCars = useMemo(() => {
-    if (category === "All") return cars;
-    const keys = CATEGORY_KEYWORDS[category];
-    return cars.filter((c) => {
+  const featured = useMemo(() => {
+    const matchCategory = (c: Car, cat: Category) => {
       const hay = `${c.name} ${c.description ?? ""}`.toLowerCase();
-      return keys.some((k) => hay.includes(k));
-    });
-  }, [cars, category]);
+      return CATEGORY_KEYWORDS[cat].some((k) => hay.includes(k));
+    };
+    return CATEGORIES.map((cat) => ({
+      category: cat,
+      car: cars.find((c) => matchCategory(c, cat)) ?? null,
+    }));
+  }, [cars]);
 
   const handleAiSubmit = async (q?: string) => {
     const query = (q ?? aiQuery).trim();

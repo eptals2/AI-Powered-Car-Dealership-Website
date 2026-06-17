@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { supabase } from "@/integrations/supabase/client";
 import { CarDetailsDialog } from "@/components/CarDetailsDialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Link } from "@tanstack/react-router";
 import type { Tables } from "@/integrations/supabase/types";
 import ReactMarkdown from "react-markdown";
 

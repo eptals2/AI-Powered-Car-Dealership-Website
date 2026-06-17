@@ -9,7 +9,7 @@ import type { Tables } from "@/integrations/supabase/types";
 
 type Car = Tables<"cars">;
 
-export const Route = createFileRoute("/cars/$id")({ component: CarDetailPage });
+export const Route = createFileRoute("/cars_/$id")({ component: CarDetailPage });
 
 function CarDetailPage() {
   const { id } = Route.useParams();

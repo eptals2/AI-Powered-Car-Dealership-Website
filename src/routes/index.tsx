@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { supabase } from "@/integrations/supabase/client";
 import { CarDetailsDialog } from "@/components/CarDetailsDialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Link } from "@tanstack/react-router";
 import type { Tables } from "@/integrations/supabase/types";
 import ReactMarkdown from "react-markdown";
 
@@ -162,25 +164,33 @@ function Index() {
         </div>
       </section>
 
-      <section id="aiReply">
-        {aiReply && (
-          <div className="container mx-auto px-4 mt-6">
-            <div className="rounded-xl bg-card border text-foreground p-5 text-left shadow-lg">
-              <div className="flex items-center gap-2 mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                <Sparkles className="h-3.5 w-3.5" /> AI Recommendation
-              </div>
-              <p className="text-sm whitespace-pre-wrap mb-4">{aiReply} <br />
-              If you are looking for more units, go to <a href="/cars" className="underline">BROWSE CARS</a>.</p>
+      <Dialog open={!!aiReply} onOpenChange={(v) => { if (!v) { setAiReply(null); setAiCars([]); } }}>
+        <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              <Sparkles className="h-3.5 w-3.5" /> AI Recommendation
+            </DialogTitle>
+          </DialogHeader>
+          {aiReply && (
+            <>
+              <p className="text-sm whitespace-pre-wrap mb-4">
+                {aiReply} <br />
+                If you are looking for more units, go to{" "}
+                <Link to="/cars" className="underline" onClick={() => { setAiReply(null); setAiCars([]); }}>
+                  BROWSE CARS
+                </Link>.
+              </p>
               {aiCars.length > 0 && (
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {aiCars.map((car) => {
                     const imgs = (car.images && car.images.length > 0) ? car.images : (car.image_url ? [car.image_url] : []);
                     return (
-                      <button
+                      <Link
                         key={car.id}
-                        type="button"
-                        onClick={() => setSelected(car)}
-                        className="group text-left overflow-hidden rounded-lg border bg-background &nbsp shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                        to="/cars/$id"
+                        params={{ id: car.id }}
+                        onClick={() => { setAiReply(null); setAiCars([]); }}
+                        className="group text-left overflow-hidden rounded-lg border bg-background shadow-sm transition hover:-translate-y-1 hover:shadow-md"
                       >
                         <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                           {imgs.length > 0 ? (
@@ -193,15 +203,16 @@ function Index() {
                           <div className="font-medium text-sm truncate">{car.name}</div>
                           <div className="text-xs text-muted-foreground mt-0.5">PHP {Number(car.price).toLocaleString()}</div>
                         </div>
-                      </button>
+                      </Link>
                     );
                   })}
                 </div>
               )}
-            </div>
-          </div>
-        )}
-      </section>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
 
       {/* Featured Cars */}
 

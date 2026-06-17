@@ -6,5 +6,12 @@
   "main": "dist/server/server.js",
   "assets": {
     "directory": "dist/client"
+  },
+
+  "env": {
+    "staging": {
+      "name": "staging"
+    }
   }
+
 }

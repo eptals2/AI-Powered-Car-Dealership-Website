@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
-import { CAR_ASSISTANT_SYSTEM_PROMPT } from "@/ai/prompts/carAssistantPrompt";
+import { CAR_ASSISTANT_SYSTEM_PROMPT } from "@/ai/prompts/carAssistantPrompt-v1";
 
 export const aiCarSearch = createServerFn({ method: "POST" })
   .inputValidator((input: { query: string }) => {

@@ -1,13 +1,12 @@
 import { createClient } from "@supabase/supabase-js";
 import type { Car } from "../types/ai.types"
 
-const supabase = createClient(
-    process.env.SUPABASE_URL!,
-    process.env.SUPABASE_PUBLISHABLE_KEY!
-)
-
 export async function getInventory(): Promise<Car[]> {
-    const {data, error} = await supabase
+    const supabase = createClient(
+        process.env.SUPABASE_URL!,
+        process.env.SUPABASE_PUBLISHABLE_KEY!
+    )
+    const { data, error } = await supabase
         .from("cars")
         .select("*")
         .limit(50);
@@ -24,10 +23,10 @@ export function formatInventory(cars: Car[]) {
     return cars
         .map((car, index) => {
             const description = car.description
-            ? `- ${String(car.description).slice(0, 120)}`
-            : "";
-            
+                ? `- ${String(car.description).slice(0, 120)}`
+                : "";
+
             return `[${index + 1}] id=${car.id} | ${car.name} - PHP ${car.price} (${car.status}) ${description}`;
         })
         .join("\n");
-    }
+}

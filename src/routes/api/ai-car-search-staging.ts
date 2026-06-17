@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { recommendCars } from "@/ai/services/carRecommendation.service";
 
-export const Route = createFileRoute("/api/ai-car-search")({
+export const Route = createFileRoute("/api/ai-car-search-staging")({
   server: {
     handlers: {
       POST: async ({ request }) => {

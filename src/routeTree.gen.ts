@@ -14,6 +14,7 @@ import { Route as CarsRouteImport } from './routes/cars'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiAiCarSearchStagingRouteImport } from './routes/api/ai-car-search-staging'
 import { Route as ApiAiCarSearchRouteImport } from './routes/api/ai-car-search'
 
 const MadeToOrderRoute = MadeToOrderRouteImport.update({
@@ -41,6 +42,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAiCarSearchStagingRoute = ApiAiCarSearchStagingRouteImport.update({
+  id: '/api/ai-car-search-staging',
+  path: '/api/ai-car-search-staging',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAiCarSearchRoute = ApiAiCarSearchRouteImport.update({
   id: '/api/ai-car-search',
   path: '/api/ai-car-search',
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/cars': typeof CarsRoute
   '/made-to-order': typeof MadeToOrderRoute
   '/api/ai-car-search': typeof ApiAiCarSearchRoute
+  '/api/ai-car-search-staging': typeof ApiAiCarSearchStagingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/cars': typeof CarsRoute
   '/made-to-order': typeof MadeToOrderRoute
   '/api/ai-car-search': typeof ApiAiCarSearchRoute
+  '/api/ai-car-search-staging': typeof ApiAiCarSearchStagingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/cars': typeof CarsRoute
   '/made-to-order': typeof MadeToOrderRoute
   '/api/ai-car-search': typeof ApiAiCarSearchRoute
+  '/api/ai-car-search-staging': typeof ApiAiCarSearchStagingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/cars'
     | '/made-to-order'
     | '/api/ai-car-search'
+    | '/api/ai-car-search-staging'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/cars'
     | '/made-to-order'
     | '/api/ai-car-search'
+    | '/api/ai-car-search-staging'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/cars'
     | '/made-to-order'
     | '/api/ai-car-search'
+    | '/api/ai-car-search-staging'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   CarsRoute: typeof CarsRoute
   MadeToOrderRoute: typeof MadeToOrderRoute
   ApiAiCarSearchRoute: typeof ApiAiCarSearchRoute
+  ApiAiCarSearchStagingRoute: typeof ApiAiCarSearchStagingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -145,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/ai-car-search-staging': {
+      id: '/api/ai-car-search-staging'
+      path: '/api/ai-car-search-staging'
+      fullPath: '/api/ai-car-search-staging'
+      preLoaderRoute: typeof ApiAiCarSearchStagingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/ai-car-search': {
       id: '/api/ai-car-search'
       path: '/api/ai-car-search'
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   CarsRoute: CarsRoute,
   MadeToOrderRoute: MadeToOrderRoute,
   ApiAiCarSearchRoute: ApiAiCarSearchRoute,
+  ApiAiCarSearchStagingRoute: ApiAiCarSearchStagingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

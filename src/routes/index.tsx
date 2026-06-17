@@ -10,6 +10,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { supabase } from "@/integrations/supabase/client";
 import { CarDetailsDialog } from "@/components/CarDetailsDialog";
 import type { Tables } from "@/integrations/supabase/types";
+import ReactMarkdown from "react-markdown";
 
 const heroCars = "hero-cars.png";
 import BrandMarquee from "@/components/BrandMarquee";
@@ -124,7 +125,7 @@ function Index() {
                 <Sparkles className="h-3.5 w-3.5" /> AI-powered
               </div>
               <h2 className="font-display text-4xl md:text-5xl leading-[1.05]">
-                Need help in getting your 
+                Need help in getting your
                 <br />
                 <span className="text-primary-foreground/95 [text-shadow:0_0_40px_oklch(0.65_0.24_27_/_0.6)]">
                   Dream Car?
@@ -161,44 +162,49 @@ function Index() {
         </div>
       </section>
 
-      {/* Featured Cars */}
-      {aiReply && (
-        <div className="container mx-auto px-4 mt-6">
-          <div className="rounded-xl bg-card border text-foreground p-5 text-left shadow-lg">
-            <div className="flex items-center gap-2 mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-              <Sparkles className="h-3.5 w-3.5" /> AI Recommendation
-            </div>
-            <p className="text-sm whitespace-pre-wrap mb-4">{aiReply}</p>
-            {aiCars.length > 0 && (
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {aiCars.map((car) => {
-                  const imgs = (car.images && car.images.length > 0) ? car.images : (car.image_url ? [car.image_url] : []);
-                  return (
-                    <button
-                      key={car.id}
-                      type="button"
-                      onClick={() => setSelected(car)}
-                      className="group text-left overflow-hidden rounded-lg border bg-background shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-                    >
-                      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-                        {imgs.length > 0 ? (
-                          <img src={imgs[0]} alt={car.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
-                        ) : (
-                          <div className="flex h-full items-center justify-center text-muted-foreground text-sm">No image</div>
-                        )}
-                      </div>
-                      <div className="p-3">
-                        <div className="font-medium text-sm truncate">{car.name}</div>
-                        <div className="text-xs text-muted-foreground mt-0.5">PHP {Number(car.price).toLocaleString()}</div>
-                      </div>
-                    </button>
-                  );
-                })}
+      <section id="aiReply">
+        {aiReply && (
+          <div className="container mx-auto px-4 mt-6">
+            <div className="rounded-xl bg-card border text-foreground p-5 text-left shadow-lg">
+              <div className="flex items-center gap-2 mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                <Sparkles className="h-3.5 w-3.5" /> AI Recommendation
               </div>
-            )}
+              <p className="text-sm whitespace-pre-wrap mb-4">{aiReply} <br />
+              If you are looking for more units, go to <a href="/cars" className="underline">BROWSE CARS</a>.</p>
+              {aiCars.length > 0 && (
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  {aiCars.map((car) => {
+                    const imgs = (car.images && car.images.length > 0) ? car.images : (car.image_url ? [car.image_url] : []);
+                    return (
+                      <button
+                        key={car.id}
+                        type="button"
+                        onClick={() => setSelected(car)}
+                        className="group text-left overflow-hidden rounded-lg border bg-background &nbsp shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                      >
+                        <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                          {imgs.length > 0 ? (
+                            <img src={imgs[0]} alt={car.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+                          ) : (
+                            <div className="flex h-full items-center justify-center text-muted-foreground text-sm">No image</div>
+                          )}
+                        </div>
+                        <div className="p-3">
+                          <div className="font-medium text-sm truncate">{car.name}</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">PHP {Number(car.price).toLocaleString()}</div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </section>
+
+      {/* Featured Cars */}
+
       {/* <section id="featured" className="container mx-auto px-4 py-16">
         <div className="flex items-end justify-between mb-6 flex-wrap gap-4">
           <div>

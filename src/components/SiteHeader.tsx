@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const links = [
   { href: "/#hero", label: "Home" },
-  { href: "/cars", label: "Browse" },
+  { href: "/cars", label: "Cars" },
   // { href: "/made-to-order", label: "Made to Order" },
   { href: "/#contact", label: "Contact" },
 ];

@@ -25,20 +25,22 @@ export const Route = createFileRoute("/api/ai-car-search")({
         const supabaseUrl = process.env.SUPABASE_URL;
         const supabaseKey = process.env.SUPABASE_PUBLISHABLE_KEY;
         let inventory = "";
+        let allCars: any[] = [];
 
         if (supabaseUrl && supabaseKey) {
           const supabase = createClient(supabaseUrl, supabaseKey);
           const { data: cars, error } = await supabase
             .from("cars")
-            .select("name, price, status, description")
+            .select("*")
             .limit(50);
 
           if (error) console.error("[ai-car-search] Inventory read failed", error.message);
 
-          inventory = (cars ?? [])
+          allCars = cars ?? [];
+          inventory = allCars
             .map((car, index) => {
               const description = car.description ? ` — ${String(car.description).slice(0, 120)}` : "";
-              return `${index + 1}. ${car.name} — PHP ${car.price} (${car.status})${description}`;
+              return `[${index + 1}] id=${car.id} | ${car.name} — PHP ${car.price} (${car.status})${description}`;
             })
             .join("\n");
         }
@@ -50,12 +52,13 @@ export const Route = createFileRoute("/api/ai-car-search")({
             Authorization: `Bearer ${apiKey}`,
           },
           body: JSON.stringify({
-            model: "gemini-2.5-flash",
+            model: "gemini-2.5-flash-lite",
+            response_format: { type: "json_object" },
             messages: [
               {
                 role: "system",
                 content:
-                  "You are a friendly car-buying assistant for Eric Car Trading in the Philippines. Recommend cars only from the provided inventory. Be concise with up to 4 short bullet points. Always mention the car name and price. If nothing matches, suggest the closest options.",
+                  'You are a friendly car-buying assistant for Eric Car Trading in the Philippines. Recommend cars only from the provided inventory. Respond ONLY with a valid JSON object of shape {"reply": string, "car_ids": string[]} where reply is a short friendly message (max 3 sentences) and car_ids lists the ids of up to 4 matching cars from the inventory, ordered by best fit. If nothing matches, return the closest options.',
               },
               {
                 role: "user",
@@ -80,7 +83,28 @@ export const Route = createFileRoute("/api/ai-car-search")({
         }
 
         const json = (await aiResponse.json()) as AiGatewayResponse;
-        return Response.json({ reply: json.choices?.[0]?.message?.content ?? "Sorry, no answer." });
+        const content = json.choices?.[0]?.message?.content ?? "";
+
+        let reply = content;
+        let carIds: string[] = [];
+        try {
+          const parsed = JSON.parse(content);
+          if (parsed && typeof parsed === "object") {
+            if (typeof parsed.reply === "string") reply = parsed.reply;
+            if (Array.isArray(parsed.car_ids)) {
+              carIds = parsed.car_ids.filter((x: unknown): x is string => typeof x === "string");
+            }
+          }
+        } catch {
+          // fall back to raw text
+        }
+
+        const idSet = new Set(carIds);
+        const matchedCars = allCars
+          .filter((c) => idSet.has(c.id))
+          .sort((a, b) => carIds.indexOf(a.id) - carIds.indexOf(b.id));
+
+        return Response.json({ reply: reply || "Sorry, no answer.", cars: matchedCars });
       },
     },
   },

@@ -72,7 +72,7 @@ function CarsPage() {
         <div className="flex items-end justify-between mb-8 gap-4 flex-wrap">
           <div>
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">The Lineup</div>
-            <h1 className="font-display text-4xl md:text-5xl">Available Cars</h1>
+            <h1 className="font-display text-4xl md:text-5xl">All Units</h1>
           </div>
           <div className="flex items-center gap-3 flex-wrap">
             <div className="relative">

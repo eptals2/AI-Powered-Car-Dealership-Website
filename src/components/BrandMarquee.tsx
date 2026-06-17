@@ -141,7 +141,7 @@ const items = [...brands, ...brands];
 export default function BrandMarquee() {
     return (
         <section style={styles.section}>
-            <p style={styles.label}>Featured car brands</p>
+            <p style={styles.label}>Car brands</p>
 
             <div style={styles.wrapper}>
                 <div style={{ ...styles.fade, left: 0 }} />

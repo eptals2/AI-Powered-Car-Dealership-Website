@@ -18,7 +18,7 @@ export function SiteHeader() {
           </div>
           <div className="leading-tight">
             <div className="font-display text-md ">ERIC CAR TRADING</div>
-            {/* <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Drive your dream</div> */}
+            <div className="text-[5px] uppercase tracking-[0.2em] text-muted-foreground">Drive your dream</div>
           </div>
         </Link>
 

@@ -97,7 +97,7 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
                     <span className="font-semibold">{PHP(downpayment)}</span>
                   </div>
                   <div className="space-y-4">
-                    <Input type="number" placeholder="Input Downpayment" value={downpayment.toString()} min={minDp} max={maxDp} />
+                    <Input type="number" placeholder="Input Downpayment" value={downpayment.toString()} min={minDp} max={maxDp} onChange={(e) => setDownpayment(parseInt(e.target.value) || 0)} />
                     {downpayment < minDp && (
                       <div className="text-xs font-medium text-destructive">
                         DP is lower than minimum. Downpayment must be {PHP(minDp)}

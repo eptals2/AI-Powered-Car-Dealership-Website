@@ -69,29 +69,31 @@ function CarsPage() {
       <SiteHeader />
 
       <section id="cars" className="container mx-auto px-4 py-12">
-        <div className="flex items-end justify-between mb-8 gap-4 flex-wrap">
-          <div>
-            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">The Lineup</div>
-            <h1 className="font-display text-4xl md:text-5xl">All Units</h1>
-          </div>
-          <div className="flex items-center gap-3 flex-wrap">
-            <div className="relative">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search cars..."
-                value={searchQuery}
-                onChange={(e) => { setSearchQuery(e.target.value); setPage(1); }}
-                className="pl-9 w-[220px]"
-              />
+        <div className="sticky top-0 z-20 bg-background pb-4 mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">The Lineup</div>
+              <h1 className="font-display text-4xl md:text-5xl">All Units</h1>
             </div>
-            <span className="text-sm text-muted-foreground hidden sm:block">{cars.length} units</span>
-            <Select value={sort} onValueChange={(v) => { setSort(v as typeof sort); setPage(1); }}>
-              <SelectTrigger className="w-[180px]"><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="price_asc">Price: Low to High</SelectItem>
-                <SelectItem value="price_desc">Price: High to Low</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="flex items-center gap-3 flex-wrap">
+              <div className="relative">
+                <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search cars..."
+                  value={searchQuery}
+                  onChange={(e) => { setSearchQuery(e.target.value); setPage(1); }}
+                  className="pl-9 w-[160px]"
+                />
+              </div>
+              <span className="text-sm text-muted-foreground hidden sm:block">{cars.length} units</span>
+              <Select value={sort} onValueChange={(v) => { setSort(v as typeof sort); setPage(1); }}>
+                <SelectTrigger className="w-[160px]"><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="price_asc">Price: Low to High</SelectItem>
+                  <SelectItem value="price_desc">Price: High to Low</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
 
@@ -107,7 +109,7 @@ function CarsPage() {
           <>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {paginatedCars.map((c) => (
-                <article key={c.id} className="group overflow-hidden rounded-lg border bg-card shadow-[var(--shadow-card)] transition hover:-translate-y-1 hover:shadow-[var(--shadow-glow)]">
+                <article key={c.id} onClick={() => setSelected(c)} className="group overflow-hidden rounded-lg border bg-card shadow-[var(--shadow-card)] transition hover:-translate-y-1 hover:shadow-[var(--shadow-glow)]">
                   <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                     {(() => {
                       const imgs = (c.images && c.images.length > 0) ? c.images : (c.image_url ? [c.image_url] : []);
@@ -138,10 +140,9 @@ function CarsPage() {
                   </div>
                   <div className="p-5">
                     <h3 className="font-display text-xl">{c.name}</h3>
-                    <div className="mt-1 text-2xl font-semibold text-primary">{PHP(Number(c.price))}</div>
-                    <Button className="mt-4 w-full" variant="secondary" onClick={() => setSelected(c)}>
-                      Get this
-                    </Button>
+                    <div className="mt-1 text-2xl font-semibold text-primary">
+                      {PHP(Number(c.price))}
+                    </div>
                   </div>
                 </article>
               ))}

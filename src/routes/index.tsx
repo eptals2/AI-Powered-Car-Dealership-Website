@@ -17,6 +17,7 @@ import ReactMarkdown from "react-markdown";
 const heroCars = "hero-cars.png";
 import BrandMarquee from "@/components/BrandMarquee";
 import { TypingPrompt } from "@/components/FaqTypings";
+import { resolve } from "path";
 
 type Car = Tables<"cars">;
 
@@ -82,6 +83,10 @@ function Index() {
     setAiLoading(true);
     setAiReply(null);
     setAiCars([]);
+
+    const startTime = Date.now();
+    const MIN_LOADING_TIME = 3000; // 3 seconds
+
     try {
       const response = await fetch("/api/ai-car-search", {
         method: "POST",
@@ -97,6 +102,13 @@ function Index() {
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "AI unavailable");
     } finally {
+      // ✅ Wait out the remaining time if AI replied too fast
+      const elapsed  = Date.now() - startTime;
+      const remaining = MIN_LOADING_TIME - elapsed;
+
+      if (remaining > 0) {
+        await new Promise((resolve) => setTimeout(resolve, remaining));
+      }
       setAiLoading(false);
     }
   };
@@ -164,14 +176,28 @@ function Index() {
         </div>
       </section>
 
-      <Dialog open={!!aiReply} onOpenChange={(v) => { if (!v) { setAiReply(null); setAiCars([]); } }}>
+      <Dialog open={!!aiReply || aiLoading} onOpenChange={(v) => { if (!v) { setAiReply(null); setAiCars([]); setAiLoading(false); } }}>
         <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
               <Sparkles className="h-3.5 w-3.5" /> AI Recommendation
             </DialogTitle>
           </DialogHeader>
-          {aiReply && (
+          {aiLoading && (
+            <div className="flex flex-col items-center justify-center py-12 gap-4">
+              <img
+                src="/loading.gif"
+                alt="AI is thinking..."
+                className="w-24 h-24" 
+              />
+              <p className="text-sm text-muted-foreground animate-pulse">
+                Gemini is thinking the best answer for you...
+              </p>
+            </div>
+          )
+
+          }
+          {!aiLoading && aiReply && (
             <>
               <p className="text-sm whitespace-pre-wrap mb-4">
                 {aiReply} <br />

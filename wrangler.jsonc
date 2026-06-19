@@ -11,6 +11,9 @@
   "env": {
     "staging": {
       "name": "staging"
+    },
+    "prod":{
+      "name": "app"
     }
   }
 

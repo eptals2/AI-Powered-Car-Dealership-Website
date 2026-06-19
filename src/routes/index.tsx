@@ -103,7 +103,7 @@ function Index() {
       toast.error(e instanceof Error ? e.message : "AI unavailable");
     } finally {
       // ✅ Wait out the remaining time if AI replied too fast
-      const elapsed  = Date.now() - startTime;
+      const elapsed = Date.now() - startTime;
       const remaining = MIN_LOADING_TIME - elapsed;
 
       if (remaining > 0) {
@@ -121,7 +121,7 @@ function Index() {
       {/* Hero */}
       <section
         id="hero"
-        className="relative overflow-hidden text-white"
+        className="relative overflow-hidden text-white pt-8"
         style={{ background: "var(--gradient-hero)" }}
       >
         <div
@@ -170,6 +170,14 @@ function Index() {
                 <div className="flex flex-wrap gap-2 md:justify-start">
                   <TypingPrompt onSubmit={handleAiSubmit} disabled={aiLoading} />
                 </div>
+                <div className="flex items-center gap-4 pb-16 pt-8">
+                  <h3 className="font-display text-1xl md:text-2xl leading-[1.05]">
+                    Looking for units? Go directly to:
+                    <span>
+                      <Button className="h-14 px-6 text-lg"> <a href="/cars">Browse Cars</a> </Button>
+                    </span>
+                  </h3>
+                </div>
               </form>
             </div>
           </div>
@@ -188,7 +196,7 @@ function Index() {
               <img
                 src="/loading.gif"
                 alt="AI is thinking..."
-                className="w-24 h-24" 
+                className="w-24 h-24"
               />
               <p className="text-sm text-muted-foreground animate-pulse">
                 Gemini is thinking the best answer for you...
@@ -298,13 +306,19 @@ function Index() {
       <CarDetailsDialog car={selected} open={!!selected} onOpenChange={(v) => !v && setSelected(null)} /> */}
 
       {/* Why */}
-      <section id="why" className="container mx-auto px-4 py-16 grid gap-6 md:grid-cols-3">
+      <section id="why" className="container mx-auto px-4 py-8">
+        <div className="flex items-end justify-between mb-6 flex-wrap gap-4">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Why</div>
+            <h2 className="font-display text-4xl md:text-5xl">Eric Car Trading?</h2>
+          </div>
+        </div>
         {[
           { icon: Banknote, t: "Flexible Financing", d: "Customize your downpayment and term to fit your monthly budget." },
           { icon: ShieldCheck, t: "Verified Units", d: "Every car undergoes thorough inspection before listing." },
           { icon: Wrench, t: "After-Sales Care", d: "Service support and assistance long after the keys are yours." },
         ].map(({ icon: Icon, t, d }) => (
-          <div key={t} className="rounded-lg border bg-card p-6 shadow-[var(--shadow-card)]">
+          <div key={t} className="rounded-lg border bg-card p-6 shadow-[var(--shadow-card)] mb-2">
             <div className="inline-flex h-11 w-11 items-center justify-center rounded-md bg-primary/10 text-primary">
               <Icon className="h-5 w-5" />
             </div>

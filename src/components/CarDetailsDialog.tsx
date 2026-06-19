@@ -50,7 +50,7 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
   return (
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto" onOpenAutoFocus={(e) => e.preventDefault()}>
           <DialogHeader>
             <DialogTitle className="font-display text-3xl">{car.name}</DialogTitle>
           </DialogHeader>
@@ -89,14 +89,14 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
               {car.description && <p className="text-sm text-muted-foreground">{car.description}</p>}
 
               <div className="rounded-lg border bg-card p-4 space-y-5">
-                <div className="text-xs font-semibold uppercase tracking-widest text-primary">Customize Payment</div>
+                <div className="text-xs font-semibold uppercase tracking-widest text-primary">Financing Estimate</div>
 
                 <div>
                   <div className="flex justify-between text-sm mb-2">
-                    <Label>Downpayment</Label>
+                    <Label>Minimum  Downpayment</Label>
                     <span className="font-semibold">{PHP(downpayment)}</span>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-4">
                     <Input type="number" placeholder="Input Downpayment" value={downpayment.toString()} min={minDp} max={maxDp} onChange={(e) => setDownpayment(parseInt(e.target.value) || 0)} />
                     {downpayment < minDp && (
                       <div className="text-xs font-medium text-destructive">
@@ -112,7 +112,7 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
                     <Label>Years to Pay</Label>
                     <span className="font-semibold">{years} {years === 1 ? "year" : "years"}</span>
                   </div>
-                  <Slider value={[years]} min={1} max={5} step={1} onValueChange={(v) => setYears(v[0])} />
+                  <Slider value={[years]} min={1} max={3} step={1} onValueChange={(v) => setYears(v[0])} />
                 </div>
 
                 <div className="rounded-md bg-primary/10 p-3 text-center">
@@ -125,8 +125,14 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
           </div>
 
           <DialogFooter className="gap-2 sm:gap-2">
-            <Button variant="outline" disabled={outOfStock || downpayment < minDp} onClick={() => setFormOpen("quote")}>Get Free Quote</Button>
-            <Button disabled={outOfStock || downpayment < minDp} onClick={() => setFormOpen("reserve")}>Reserve This Unit</Button>
+            {outOfStock ? (
+              <Button className="w-full">Made to Order</Button>
+            ) : (
+              <>
+                <Button variant="outline" disabled={downpayment < minDp} onClick={() => setFormOpen("quote")}>Get Free Quote</Button>
+                <Button disabled={downpayment < minDp} onClick={() => setFormOpen("reserve")}>Reserve This Unit</Button>
+              </>
+            )}
           </DialogFooter>
         </DialogContent>
       </Dialog>

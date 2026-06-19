@@ -120,7 +120,7 @@ function Index() {
 
       {/* Hero */}
       <section
-        id="hero"
+        id="home"
         className="relative overflow-hidden text-white pt-8"
         style={{ background: "var(--gradient-hero)" }}
       >

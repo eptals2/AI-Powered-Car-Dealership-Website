@@ -63,7 +63,7 @@ export function SiteFooter() {
             ))}
           </div>
         </div>
-        <div className="md:col-span-2">
+        <div id="location" className="md:col-span-2">
           <iframe
             title="Store Location"
             width="100%"

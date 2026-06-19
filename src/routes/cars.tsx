@@ -68,8 +68,8 @@ function CarsPage() {
     <div className="min-h-screen bg-background">
       <SiteHeader />
 
-      <section id="cars" className="container mx-auto px-4 py-12">
-        <div className="sticky top-0 z-20 bg-background pb-4 mb-4">
+      <section id="cars" className="container mx-auto px-4 py-6">
+        <div className="sticky top-0 z-20 bg-background pb-2 mb-2">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <div>
               <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">The Lineup</div>
@@ -82,17 +82,52 @@ function CarsPage() {
                   placeholder="Search cars..."
                   value={searchQuery}
                   onChange={(e) => { setSearchQuery(e.target.value); setPage(1); }}
-                  className="pl-9 w-[160px]"
+                  className="pl-9 w-[140px]"
                 />
               </div>
               <span className="text-sm text-muted-foreground hidden sm:block">{cars.length} units</span>
               <Select value={sort} onValueChange={(v) => { setSort(v as typeof sort); setPage(1); }}>
-                <SelectTrigger className="w-[160px]"><SelectValue /></SelectTrigger>
+                <SelectTrigger className="w-[170px]"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="price_asc">Price: Low to High</SelectItem>
                   <SelectItem value="price_desc">Price: High to Low</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+            <div>
+              {totalPages > 1 && (
+                <div className=" flex justify-center">
+                  <Pagination>
+                    <PaginationContent>
+                      <PaginationItem>
+                        <PaginationPrevious
+                          href="#cars"
+                          onClick={(e) => { e.preventDefault(); setPage((p) => Math.max(1, p - 1)); }}
+                          className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                        />
+                      </PaginationItem>
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                        <PaginationItem key={p}>
+                          <PaginationLink
+                            href="#cars"
+                            onClick={(e) => { e.preventDefault(); setPage(p); }}
+                            isActive={p === currentPage}
+                          >
+                            {p}
+                          </PaginationLink>
+                        </PaginationItem>
+                      ))}
+                      <PaginationItem>
+                        <PaginationNext
+                          href="#cars"
+                          onClick={(e) => { e.preventDefault(); setPage((p) => Math.min(totalPages, p + 1)); }}
+                          className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                        />
+                      </PaginationItem>
+                    </PaginationContent>
+                  </Pagination>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -147,46 +182,8 @@ function CarsPage() {
                 </article>
               ))}
             </div>
-
-            {totalPages > 1 && (
-              <div className="mt-10 flex justify-center">
-                <Pagination>
-                  <PaginationContent>
-                    <PaginationItem>
-                      <PaginationPrevious
-                        href="#cars"
-                        onClick={(e) => { e.preventDefault(); setPage((p) => Math.max(1, p - 1)); }}
-                        className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
-                      />
-                    </PaginationItem>
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                      <PaginationItem key={p}>
-                        <PaginationLink
-                          href="#cars"
-                          onClick={(e) => { e.preventDefault(); setPage(p); }}
-                          isActive={p === currentPage}
-                        >
-                          {p}
-                        </PaginationLink>
-                      </PaginationItem>
-                    ))}
-                    <PaginationItem>
-                      <PaginationNext
-                        href="#cars"
-                        onClick={(e) => { e.preventDefault(); setPage((p) => Math.min(totalPages, p + 1)); }}
-                        className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
-                      />
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
-              </div>
-            )}
           </>
         )}
-      </section>
-
-      <section id="contact">
-        <SiteFooter />
       </section>
       <CarDetailsDialog car={selected} open={!!selected} onOpenChange={(v) => !v && setSelected(null)} />
     </div>

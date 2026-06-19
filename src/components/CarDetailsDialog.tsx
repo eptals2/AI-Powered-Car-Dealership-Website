@@ -30,7 +30,7 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
 
   const [downpayment, setDownpayment] = useState(minDp);
   const [years, setYears] = useState(3);
-  const [formOpen, setFormOpen] = useState<null | "quote" | "reserve">(null);
+  const [formOpen, setFormOpen] = useState<null | "order" | "quote" | "reserve">(null);
 
   useEffect(() => {
     setDownpayment(Math.round(price * 0.2));
@@ -126,7 +126,7 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
 
           <DialogFooter className="gap-2 sm:gap-2">
             {outOfStock ? (
-              <Button className="w-full">Made to Order</Button>
+              <Button className="w-full" onClick={() => setFormOpen("order")}>Made to Order</Button>
             ) : (
               <>
                 <Button variant="outline" disabled={downpayment < minDp} onClick={() => setFormOpen("quote")}>Get Free Quote</Button>
@@ -152,9 +152,30 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
 
 function InquiryForm({ open, onOpenChange, type, car, downpayment, monthly, years }: {
   open: boolean; onOpenChange: (v: boolean) => void;
-  type: "quote" | "reserve"; car: Car; downpayment: number; monthly: number; years: number;
+  type: "order" | "quote" | "reserve"; car: Car; downpayment: number; monthly: number; years: number;
 }) {
   const [submitting, setSubmitting] = useState(false);
+
+  const formType = {
+    order: {
+      title: "Made to Order",
+      button: "Submit Order Request",
+      submittingLabel: "Submitting Order...",
+      successMessage: "Order request submitted! We'll contact you shortly.",
+    },
+    quote: {
+      title: "Get Free Quote",
+      button: "Request Quote",
+      submittingLabel: "Submitting...",
+      successMessage: "Quote requested! We'll be in touch.",
+    },
+    reserve: {
+      title: "Reserve Unit",
+      button: "Confirm Reservation",
+      submittingLabel: "Submitting...",
+      successMessage: "Reservation submitted! We'll contact you shortly.",
+    },
+  }[type]
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -182,7 +203,7 @@ function InquiryForm({ open, onOpenChange, type, car, downpayment, monthly, year
     });
     setSubmitting(false);
     if (error) { toast.error(error.message); return; }
-    toast.success(type === "reserve" ? "Reservation submitted! We'll contact you shortly." : "Quote requested! We'll be in touch.");
+    toast.success(formType.successMessage);
     onOpenChange(false);
   }
 
@@ -191,7 +212,7 @@ function InquiryForm({ open, onOpenChange, type, car, downpayment, monthly, year
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle className="font-display text-2xl">
-            {type === "reserve" ? "Reserve Unit" : "Get Free Quote"}
+            {formType.title}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={onSubmit} className="space-y-4">
@@ -217,7 +238,7 @@ function InquiryForm({ open, onOpenChange, type, car, downpayment, monthly, year
             <span>I agree to the Privacy Policy and authorize Eric Car Trading to contact me.</span>
           </label>
           <Button type="submit" className="w-full" disabled={submitting}>
-            {submitting ? "Submitting..." : type === "reserve" ? "Confirm Reservation" : "Request Quote"}
+            {submitting ? formType.submittingLabel : formType.button}
           </Button>
         </form>
       </DialogContent>

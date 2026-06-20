@@ -27,7 +27,7 @@ type Car = Tables<"cars">;
 export const Route = createFileRoute("/cars")({
   head: () => ({
     meta: [
-      { title: "Available Cars — Eric Car Trading" },
+      { title: "All Cars — Eric Car Trading" },
       { name: "description", content: "Browse our lineup of premium vehicles with flexible financing options." },
       { property: "og:title", content: "Available Cars — Eric Car Trading" },
       { property: "og:description", content: "Browse our lineup of premium vehicles with flexible financing options." },
@@ -170,7 +170,7 @@ function CarsPage() {
                       );
                     })()}
                     {c.status === "out_of_stock" && (
-                      <Badge variant="destructive" className="absolute top-3 left-3 z-10">Out of Stock</Badge>
+                      <Badge variant="destructive" className="absolute top-3 left-3 z-10">Sold</Badge>
                     )}
                   </div>
                   <div className="p-5">

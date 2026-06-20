@@ -46,6 +46,7 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
 
   if (!car) return null;
   const outOfStock = car.status === "out_of_stock";
+  const hideButtons = outOfStock && car.category === "commercial";
 
   return (
     <>
@@ -84,7 +85,7 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
               <div>
                 <div className="text-xs uppercase tracking-widest text-muted-foreground">Price</div>
                 <div className="font-display text-4xl text-primary">{PHP(price)}</div>
-                {outOfStock && <Badge variant="destructive" className="mt-2">Out of Stock</Badge>}
+                {outOfStock && <Badge variant="destructive" className="mt-2">Sold</Badge>}
               </div>
               {car.description && <p className="text-sm text-muted-foreground">{car.description}</p>}
 
@@ -125,14 +126,14 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
           </div>
 
           <DialogFooter className="gap-2 sm:gap-2">
-            {outOfStock ? (
+            {!hideButtons && (outOfStock ? (
               <Button className="w-full" onClick={() => setFormOpen("order")}>Made to Order</Button>
             ) : (
               <>
                 <Button variant="outline" disabled={downpayment < minDp} onClick={() => setFormOpen("quote")}>Get Free Quote</Button>
                 <Button disabled={downpayment < minDp} onClick={() => setFormOpen("reserve")}>Reserve This Unit</Button>
               </>
-            )}
+            ))}
           </DialogFooter>
         </DialogContent>
       </Dialog>

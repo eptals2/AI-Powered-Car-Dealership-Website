@@ -10,6 +10,7 @@ import type { Car } from "@/types/admin";
 
 export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () => void }) {
   const [saving, setSaving] = useState(false);
+  const [category, setCategory] = useState<"surplus" | "commercial" | null>(car?.category ?? null);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [existingImages, setExistingImages] = useState<string[]>(
     (car?.images && car.images.length > 0)
@@ -49,7 +50,7 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
     const images = [...existingImages, ...uploadedUrls];
     const image_url = images[0] ?? null;
 
-    const payload = { name, price, description, image_url, images };
+    const payload = { name, price, description, image_url, images, category };
     const { error } = car
       ? await supabase.from("cars").update(payload).eq("id", car.id)
       : await supabase.from("cars").insert(payload);
@@ -70,6 +71,23 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
         <div>
           <Label htmlFor="price">Price (PHP)</Label>
           <Input id="price" name="price" type="number" required defaultValue={car?.price ?? ""} />
+        </div>
+        <div>
+          <Label>Category</Label>
+          <div className="flex gap-2 mt-1">
+            {(["surplus", "commercial"] as const).map((c) => (
+              <Button
+                key={c}
+                type="button"
+                variant={category === c ? "default" : "outline"}
+                onClick={() => setCategory((prev) => (prev === c ? null : c))}
+                className="capitalize flex-1"
+              >
+                {c}
+              </Button>
+            ))}
+          </div>
+          {!category && <p className="text-xs text-muted-foreground mt-1">No category set.</p>}
         </div>
         <div>
           <Label htmlFor="description">Description</Label>

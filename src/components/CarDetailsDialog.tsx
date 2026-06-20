@@ -84,7 +84,7 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
               <div>
                 <div className="text-xs uppercase tracking-widest text-muted-foreground">Price</div>
                 <div className="font-display text-4xl text-primary">{PHP(price)}</div>
-                {outOfStock && <Badge variant="destructive" className="mt-2">Out of Stock</Badge>}
+                {outOfStock && <Badge variant="destructive" className="mt-2">Sold</Badge>}
               </div>
               {car.description && <p className="text-sm text-muted-foreground">{car.description}</p>}
 

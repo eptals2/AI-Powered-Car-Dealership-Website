@@ -46,6 +46,7 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
 
   if (!car) return null;
   const outOfStock = car.status === "out_of_stock";
+  const hideButtons = outOfStock && car.category === "commercial";
 
   return (
     <>
@@ -125,14 +126,14 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
           </div>
 
           <DialogFooter className="gap-2 sm:gap-2">
-            {outOfStock ? (
+            {!hideButtons && (outOfStock ? (
               <Button className="w-full" onClick={() => setFormOpen("order")}>Made to Order</Button>
             ) : (
               <>
                 <Button variant="outline" disabled={downpayment < minDp} onClick={() => setFormOpen("quote")}>Get Free Quote</Button>
                 <Button disabled={downpayment < minDp} onClick={() => setFormOpen("reserve")}>Reserve This Unit</Button>
               </>
-            )}
+            ))}
           </DialogFooter>
         </DialogContent>
       </Dialog>

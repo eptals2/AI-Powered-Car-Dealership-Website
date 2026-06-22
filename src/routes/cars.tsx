@@ -69,11 +69,11 @@ function CarsPage() {
       <SiteHeader />
 
       <section id="cars" className="container mx-auto px-4 py-6">
-        <div className="sticky top-17 z-20 bg-background pb-2 mb-2">
+        <div className="sticky top-16 z-40 bg-background pb-2 mb-2">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-            <div>
-              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">The Lineup</div>
-              <h1 className="font-display text-4xl md:text-5xl">All Units</h1>
+            <div className="px-2">
+              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">ALL</div>
+              <h1 className="font-display text-4xl md:text-5xl">Units</h1>
             </div>
             <div className="flex items-center gap-3 flex-wrap">
               <div className="relative">
@@ -171,12 +171,33 @@ function CarsPage() {
                     })()}
                     {c.status === "out_of_stock" && (
                       c.category === "surplus" ? (<Badge variant="destructive" className="absolute top-3 left-3 z-10">Made to Order</Badge>)
-                      : (<Badge variant="destructive" className="absolute top-3 left-3 z-10">Not available</Badge>)
+                        : (<Badge variant="destructive" className="absolute top-3 left-3 z-10">Not available</Badge>)
                     )}
                   </div>
                   <div className="p-5">
-                    <h3 className="font-display text-xl">{c.name}</h3>
-                    <div className="mt-1 text-2xl font-semibold text-primary">
+                    {
+                      c.category === "surplus" ? (
+                        <h3 className="font-display text-xl md:text-2xl font-semibold leading-tight tracking-tight">
+                          {c.type} {c.name} {c.wheel_drive} {c.transmission} transmission
+                        </h3>
+                      ) : (
+                        <h3 className="font-display text-xl md:text-2xl font-semibold leading-tight tracking-tight">
+                          {c.brand} {c.name} {c.transmission} transmission
+                        </h3>
+                      )
+                    }
+
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {c.accessories?.length ? (
+                        <>
+                          <span className="font-medium text-foreground">With:</span>{" "}
+                          {c.accessories.join(" • ")}
+                        </>
+                      ) : c.category === "surplus" && (
+                        <span className="">Basic Setup</span>
+                      )}
+                    </p>
+                    <div className="mt-3 text-2xl md:text-3xl font-bold text-primary tracking-tight">
                       {PHP(Number(c.price))}
                     </div>
                   </div>

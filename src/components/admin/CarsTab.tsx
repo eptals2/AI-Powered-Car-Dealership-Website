@@ -73,7 +73,8 @@ export function CarsTab({ cars, onRefresh }: { cars: Car[]; onRefresh: () => voi
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
+              <TableHead>ID</TableHead>
+              <TableHead>Unit</TableHead>
               <TableHead>Category</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Status</TableHead>
@@ -83,7 +84,17 @@ export function CarsTab({ cars, onRefresh }: { cars: Car[]; onRefresh: () => voi
           <TableBody>
             {filtered.map((c) => (
               <TableRow key={c.id}>
-                <TableCell className="font-medium">{c.name}</TableCell>
+                <TableCell className="font-small">{String(c.id).slice(-5)}</TableCell>
+                <TableCell className="font-small">
+                  {c.brand} {c.name} {c.category === "commercial" ? c.year_model : ""} {c.color} {c.accessories?.length ? (
+                    <>
+                      <span className="font-small text-foreground">with</span>{" "}
+                      {c.accessories.join(" • ")}
+                    </>
+                  ) : c.category === "surplus" && (
+                    <span className="">Basic Setup</span>
+                  )}
+                </TableCell>
                 <TableCell>
                   {c.category
                     ? <Badge variant="secondary" className="capitalize">{c.category}</Badge>
@@ -95,20 +106,20 @@ export function CarsTab({ cars, onRefresh }: { cars: Car[]; onRefresh: () => voi
                     ? <Badge>Available</Badge>
                     : <Badge variant="destructive">Out of Stock</Badge>}
                 </TableCell>
-                <TableCell className="text-right space-x-2">
+                <TableCell className="text-right space-x-1">
                   <Button size="sm" variant="outline" onClick={() => { setEditing(c); setDialogOpen(true); }}>
                     <Pencil className="h-3.5 w-3.5 mr-1" />Edit
                   </Button>
                   <Button size="sm" variant="ghost" onClick={() => toggleStatus(c)}>
                     {c.status === "available" ? "Suspend" : "Restore"}
                   </Button>
-                  <Button size="sm" variant="ghost" onClick={() => handleDelete(c)}>Delete</Button>
+                  <Button size="sm" variant="destructive" onClick={() => handleDelete(c)}>Delete</Button>
                 </TableCell>
               </TableRow>
             ))}
             {filtered.length === 0 && (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
+                <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
                   No cars match your search.
                 </TableCell>
               </TableRow>

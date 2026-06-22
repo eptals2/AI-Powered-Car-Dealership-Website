@@ -22,9 +22,16 @@ export type Database = {
           id: string
           image_url: string | null
           images: string[]
+          brand: string
           name: string
           price: number
           status: Database["public"]["Enums"]["car_status"]
+          year_model: string
+          type: string
+          color: string
+          transmission: string
+          wheel_drive: string
+          accessories: []
           updated_at: string
         }
         Insert: {

@@ -50,7 +50,9 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
     const category = String(fd.get("category")).trim();
     const transmission = String(fd.get("transmission")).trim();
     const wheel_drive = String(fd.get("wheel_drive")).trim();
-    
+    {/*accessories*/ }
+    fd.append("accessories", JSON.stringify(accessories));
+
     const description = String(fd.get("description") || "");
     if (!name || !price) { toast.error("Name and price required"); return; }
     if (existingImages.length + imageFiles.length > 5) { toast.error("Max 5 images per car"); return; }
@@ -81,6 +83,7 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
       color,
       transmission,
       wheel_drive,
+      accessories
     };
     const { error } = car
       ? await supabase.from("cars").update(payload).eq("id", car.id)
@@ -103,12 +106,13 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
                 <SelectValue placeholder="Select brand" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="SUV">Suzuki</SelectItem>
-                <SelectItem value="Sedan">Toyota</SelectItem>
-                <SelectItem value="Pickup">Mitsubishi</SelectItem>
-                <SelectItem value="van">Hyundai</SelectItem>
-                <SelectItem value="Hatchback">Nissan</SelectItem>
-                <SelectItem value="Hatchback">Honda</SelectItem>
+                <SelectItem value="Suzuki">Suzuki</SelectItem>
+                <SelectItem value="Toyota">Toyota</SelectItem>
+                <SelectItem value="Mitsubishi">Mitsubishi</SelectItem>
+                <SelectItem value="Hyundai">Hyundai</SelectItem>
+                <SelectItem value="Nissan">Nissan</SelectItem>
+                <SelectItem value="Honda">Honda</SelectItem>
+                <SelectItem value="Ford">Ford</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -152,8 +156,9 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
                 <SelectItem value="SUV">SUV</SelectItem>
                 <SelectItem value="Sedan">Sedan</SelectItem>
                 <SelectItem value="Pickup">Pickup</SelectItem>
-                <SelectItem value="van">Minivan</SelectItem>
+                <SelectItem value="Minivan">Minivan</SelectItem>
                 <SelectItem value="Hatchback">Hatchback</SelectItem>
+                <SelectItem value="Van">Van</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -169,7 +174,11 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
                 <SelectItem value="Silver">Silver</SelectItem>
                 <SelectItem value="Gray">Gray</SelectItem>
                 <SelectItem value="Red">Red</SelectItem>
+                <SelectItem value="Maroon">Maroon</SelectItem>
                 <SelectItem value="Blue">Blue</SelectItem>
+                <SelectItem value="Yellow">Yellow</SelectItem>
+                <SelectItem value="Black-White">Black-White</SelectItem>
+                <SelectItem value="Black-Biege">Black-Biege</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -195,9 +204,13 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
               <SelectContent>
                 <SelectItem value="4x2">4x2</SelectItem>
                 <SelectItem value="4x4">4x4</SelectItem>
+                <SelectItem value="FWD">4x2 - Front Wheel Drive</SelectItem>
+                <SelectItem value="RWD">4x2 - Rear Wheel Drive</SelectItem>
+                <SelectItem value="AWD">All Wheel Drive</SelectItem>
               </SelectContent>
             </Select>
           </div>
+          {/* Category */}
           <div>
             <Label>Category</Label>
             <Select
@@ -213,6 +226,36 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
                 <SelectItem value="commercial">Commercial</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+          <div className="md:col-span-2 xl:col-span-3">
+            <Label>Accessories</Label>
+
+            <div className="grid grid-cols-2 gap-3 mt-2">
+              {[
+                { id: "canopy/roofrack", label: "Canopy (pickup) | Roof Rack (minivan)" },
+                { id: "mags", label: "Mags" },
+                { id: "front bumper", label: "Front Bumper" },
+                { id: "rear stepboard", label: "Rear Stepboard" },
+                { id: "ladder", label: "Ladder" },
+              ].map((item) => (
+                <div key={item.id} className="flex items-center space-x-2">
+                  <Checkbox
+                    id={item.id}
+                    checked={accessories.includes(item.id)}
+                    onCheckedChange={(checked) => {
+                      setAccessories((prev) =>
+                        checked
+                          ? [...prev, item.id]
+                          : prev.filter((a) => a !== item.id)
+                      );
+                    }}
+                  />
+                  <Label htmlFor={item.id} className="font-normal">
+                    {item.label}
+                  </Label>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <div>

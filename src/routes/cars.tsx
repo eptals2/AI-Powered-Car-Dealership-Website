@@ -69,7 +69,7 @@ function CarsPage() {
       <SiteHeader />
 
       <section id="cars" className="container mx-auto px-4 py-6">
-        <div className="sticky top-0 z-20 bg-background pb-2 mb-2">
+        <div className="sticky top-17 z-20 bg-background pb-2 mb-2">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <div>
               <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">The Lineup</div>
@@ -170,7 +170,8 @@ function CarsPage() {
                       );
                     })()}
                     {c.status === "out_of_stock" && (
-                      <Badge variant="destructive" className="absolute top-3 left-3 z-10">Sold</Badge>
+                      c.category === "surplus" ? (<Badge variant="destructive" className="absolute top-3 left-3 z-10">Made to Order</Badge>)
+                      : (<Badge variant="destructive" className="absolute top-3 left-3 z-10">Not available</Badge>)
                     )}
                   </div>
                   <div className="p-5">

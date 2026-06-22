@@ -53,7 +53,19 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto" onOpenAutoFocus={(e) => e.preventDefault()}>
           <DialogHeader>
-            <DialogTitle className="font-display text-3xl">{car.name}</DialogTitle>
+            <DialogTitle className="font-display text-3xl">
+              {
+                car.category === "surplus" ? (
+                  <h3 className="font-display text-xl md:text-2xl font-semibold leading-tight tracking-tight">
+                    {car.type} {car.name} {car.wheel_drive} {car.transmission} transmission
+                  </h3>
+                ) : (
+                  <h3 className="font-display text-xl md:text-2xl font-semibold leading-tight tracking-tight">
+                    {car.brand} {car.name} {car.transmission} transmission
+                  </h3>
+                )
+              }
+            </DialogTitle>
           </DialogHeader>
 
           <div className="grid gap-6 md:grid-cols-2">

@@ -45,8 +45,8 @@ function AdminPage() {
 
         <Tabs defaultValue="cars">
           <TabsList>
-            <TabsTrigger value="cars">Cars ({cars.length})</TabsTrigger>
-            <TabsTrigger value="inquiries">Inquiries ({inquiries.length})</TabsTrigger>
+            <TabsTrigger value="cars">Cars Inventory ({cars.length})</TabsTrigger>
+            <TabsTrigger value="inquiries">Lead Inquiries ({inquiries.length})</TabsTrigger>
             <TabsTrigger value="mto-designs">MTO Designs ({mtoDesigns.length})</TabsTrigger>
             <TabsTrigger value="mto-inquiries">MTO Inquiries ({mtoInquiries.length})</TabsTrigger>
           </TabsList>

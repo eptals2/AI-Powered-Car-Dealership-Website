@@ -36,7 +36,7 @@ function AdminPage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Admin</div>
-            <h1 className="font-display text-4xl">Tabs</h1>
+            <h1 className="font-display text-4xl">Panel</h1>
           </div>
           <Button variant="outline" onClick={logout}>
             <LogOut className="h-4 w-4 mr-2" />Sign Out

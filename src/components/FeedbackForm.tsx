@@ -44,7 +44,7 @@ export function FeedbackForm() {
             <p className="text-2xl">✅</p>
             <p className="font-medium">Thank you for reaching out!</p>
             <p className="text-sm text-muted-foreground">We'll get back to you within 24 hours.</p>
-            <Button variant="outline" onClick={() => { setDone(false); setForm({ name: "", email: "", subject: "", message: "" }); }}>
+            <Button variant="default" onClick={() => { setDone(false); setForm({ name: "", email: "", subject: "", message: "" }); }}>
                 Submit another
             </Button>
         </div>

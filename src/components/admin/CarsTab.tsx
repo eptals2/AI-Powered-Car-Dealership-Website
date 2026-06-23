@@ -104,7 +104,7 @@ export function CarsTab({ cars, onRefresh }: { cars: Car[]; onRefresh: () => voi
                 <TableCell>
                   {c.status === "available"
                     ? <Badge>Available</Badge>
-                    : <Badge variant="destructive">Out of Stock</Badge>}
+                    : <Badge variant="destructive">Not Available</Badge>}
                 </TableCell>
                 <TableCell className="text-right space-x-1">
                   <Button size="sm" variant="outline" onClick={() => { setEditing(c); setDialogOpen(true); }}>

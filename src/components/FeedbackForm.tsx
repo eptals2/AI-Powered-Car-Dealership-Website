@@ -13,7 +13,6 @@ const TYPES = [
 ] as const;
 
 export function FeedbackForm() {
-    const [type, setType] = useState("feedback");
     const [rating, setRating] = useState(3);
     const [hover, setHover] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -32,8 +31,8 @@ export function FeedbackForm() {
             return;
         }
         setLoading(true);
-        const { error } = await supabase.from("feedback").insert({
-            ...form, type, rating,
+        const { error } = await supabase.from("feedbacks").insert({
+            ...form, rating,
         });
         setLoading(false);
         if (error) { toast.error("Something went wrong. Please try again."); return; }
@@ -45,7 +44,7 @@ export function FeedbackForm() {
             <p className="text-2xl">✅</p>
             <p className="font-medium">Thank you for reaching out!</p>
             <p className="text-sm text-muted-foreground">We'll get back to you within 24 hours.</p>
-            <Button variant="outline" onClick={() => { setDone(false); setForm({ name: "", email: "", subject: "", message: "" }); }}>
+            <Button variant="default" onClick={() => { setDone(false); setForm({ name: "", email: "", subject: "", message: "" }); }}>
                 Submit another
             </Button>
         </div>

@@ -52,7 +52,6 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
     const wheel_drive = String(fd.get("wheel_drive")).trim();
     {/*accessories*/ }
     fd.append("accessories", JSON.stringify(accessories));
-
     const description = String(fd.get("description") || "");
     if (!name || !price) { toast.error("Name and price required"); return; }
     if (existingImages.length + imageFiles.length > 5) { toast.error("Max 5 images per car"); return; }
@@ -177,8 +176,13 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
                 <SelectItem value="Maroon">Maroon</SelectItem>
                 <SelectItem value="Blue">Blue</SelectItem>
                 <SelectItem value="Yellow">Yellow</SelectItem>
+                <SelectItem value="Purple">Purple</SelectItem>
+                <SelectItem value="Biege">Biege</SelectItem>
+                <SelectItem value="Orange">Orange</SelectItem>
+                <SelectItem value="Metallic-Gray">Mettalic Gray</SelectItem>
                 <SelectItem value="Black-White">Black-White</SelectItem>
                 <SelectItem value="Black-Biege">Black-Biege</SelectItem>
+                <SelectItem value="Black-Yellow">Black-Yellow</SelectItem>
               </SelectContent>
             </Select>
           </div>

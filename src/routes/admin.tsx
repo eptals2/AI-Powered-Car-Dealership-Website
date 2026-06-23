@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SiteHeader } from "@/components/SiteHeader";
 import { LogOut } from "lucide-react";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { useAdminData } from "../hooks/useAdminData";
@@ -11,12 +10,13 @@ import { CarsTab } from "../components/admin/CarsTab";
 import { InquiriesTab } from "../components/admin/InquiriesTab";
 import { MtoDesignsTab } from "@/components/admin/MtoDesignsTab";
 import { MtoInquiriesTab } from "@/components/admin/MtoInquiriesTab";
+import { FeedbacksTab } from "@/components/admin/FeedbacksTab";
 
 export const Route = createFileRoute("/admin")({ component: AdminPage });
 
 function AdminPage() {
   const { authChecked, isAdmin, logout } = useAdminAuth();
-  const { cars, inquiries, mtoDesigns, mtoInquiries, refresh } = useAdminData();
+  const { cars, inquiries, mtoDesigns, mtoInquiries, feedbacks, refresh } = useAdminData();
 
   useEffect(() => {
     if (authChecked && isAdmin) refresh();
@@ -47,8 +47,9 @@ function AdminPage() {
           <TabsList>
             <TabsTrigger value="cars">Cars Inventory ({cars.length})</TabsTrigger>
             <TabsTrigger value="inquiries">Lead Inquiries ({inquiries.length})</TabsTrigger>
-            <TabsTrigger value="mto-designs">MTO Designs ({mtoDesigns.length})</TabsTrigger>
-            <TabsTrigger value="mto-inquiries">MTO Inquiries ({mtoInquiries.length})</TabsTrigger>
+            <TabsTrigger value="mto-designs">Gallery Designs ({mtoDesigns.length})</TabsTrigger>
+            <TabsTrigger value="mto-inquiries">Orders from Gallery ({mtoInquiries.length})</TabsTrigger>
+            <TabsTrigger value="feedbacks">Feedbacks ({feedbacks.length})</TabsTrigger>
           </TabsList>
 
           <TabsContent value="cars" className="mt-6">
@@ -65,6 +66,10 @@ function AdminPage() {
 
           <TabsContent value="mto-inquiries" className="mt-6">
             <MtoInquiriesTab inquiries={mtoInquiries} />
+          </TabsContent>
+
+          <TabsContent value="feedbacks" className="mt-6">
+            <FeedbacksTab feedback={feedbacks} />
           </TabsContent>
         </Tabs>
       </div>

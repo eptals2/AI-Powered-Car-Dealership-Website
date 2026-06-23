@@ -73,18 +73,18 @@ function MadeToOrderPage() {
       <SiteHeader />
       <main className="flex-1">
         <section className="border-b bg-gradient-to-b from-primary/5 to-transparent">
-          <div className="container mx-auto px-4 py-14 text-center">
+          <div className="container mx-auto px-1 py-7 text-center">
             <div className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">Made to Order</div>
             <h1 className="font-display text-4xl md:text-5xl mt-2">Choose your design</h1>
-            <p className="mt-4 max-w-xl mx-auto text-muted-foreground">
+            <p className="mt-1 max-w-xl mx-auto text-muted-foreground">
               Browse our gallery of minivan and minitruck designs. Pick the one you love and we'll build it for you.
             </p>
           </div>
         </section>
 
-        <section className="container mx-auto px-4 py-10">
+        <section className="container mx-auto px-2 py-2">
           <Tabs value={tab} onValueChange={(v) => { setTab(v as "all" | "minivan" | "minitruck"); setPage(1); }}>
-            <TabsList className="mb-6 flex-wrap">
+            <TabsList className="mb-1 flex-wrap">
               <TabsTrigger value="all" className="gap-2">
                 All ({designs.length})
               </TabsTrigger>
@@ -95,6 +95,29 @@ function MadeToOrderPage() {
                 <Truck className="h-4 w-4" /> Minitrucks ({designs.filter((d) => d.category === "minitruck").length})
               </TabsTrigger>
             </TabsList>
+            {/* {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 mb-2 mt-0">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={page === 1}
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                >
+                  Prev
+                </Button>
+                <span className="text-sm text-muted-foreground px-2">
+                  Page {page} of {totalPages}
+                </span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={page === totalPages}
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                >
+                  Next
+                </Button>
+              </div>
+            )} */}
 
             <TabsContent value={tab}>
               {loading ? (
@@ -129,30 +152,6 @@ function MadeToOrderPage() {
                       );
                     })}
                   </div>
-
-                  {totalPages > 1 && (
-                    <div className="flex items-center justify-center gap-2 mt-8">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        disabled={page === 1}
-                        onClick={() => setPage((p) => Math.max(1, p - 1))}
-                      >
-                        Prev
-                      </Button>
-                      <span className="text-sm text-muted-foreground px-2">
-                        Page {page} of {totalPages}
-                      </span>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        disabled={page === totalPages}
-                        onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                      >
-                        Next
-                      </Button>
-                    </div>
-                  )}
                 </>
               )}
             </TabsContent>
@@ -173,7 +172,6 @@ function MadeToOrderPage() {
           </div>
         )}
       </main>
-      <SiteFooter />
 
       <InquiryDialog
         open={formOpen}

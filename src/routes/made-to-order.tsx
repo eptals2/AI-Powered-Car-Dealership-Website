@@ -75,7 +75,7 @@ function MadeToOrderPage() {
         <section className="border-b bg-gradient-to-b from-primary/5 to-transparent">
           <div className="container mx-auto px-4 py-14 text-center">
             <div className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">Made to Order</div>
-            <h1 className="font-display text-4xl md:text-5xl mt-2">Design Your Dream Ride</h1>
+            <h1 className="font-display text-4xl md:text-5xl mt-2">Choose your design</h1>
             <p className="mt-4 max-w-xl mx-auto text-muted-foreground">
               Browse our gallery of minivan and minitruck designs. Pick the one you love and we'll build it for you.
             </p>

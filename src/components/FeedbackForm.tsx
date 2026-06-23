@@ -13,7 +13,6 @@ const TYPES = [
 ] as const;
 
 export function FeedbackForm() {
-    const [type, setType] = useState("feedback");
     const [rating, setRating] = useState(3);
     const [hover, setHover] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -32,8 +31,8 @@ export function FeedbackForm() {
             return;
         }
         setLoading(true);
-        const { error } = await supabase.from("feedback").insert({
-            ...form, type, rating,
+        const { error } = await supabase.from("feedbacks").insert({
+            ...form, rating,
         });
         setLoading(false);
         if (error) { toast.error("Something went wrong. Please try again."); return; }

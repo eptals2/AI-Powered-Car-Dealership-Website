@@ -170,8 +170,7 @@ function CarsPage() {
                       );
                     })()}
                     {c.status === "out_of_stock" && (
-                      c.category === "surplus" ? (<Badge variant="destructive" className="absolute top-3 left-3 z-10">Made to Order</Badge>)
-                        : (<Badge variant="destructive" className="absolute top-3 left-3 z-10">Not available</Badge>)
+                      <Badge variant="destructive" className="absolute top-3 left-3 z-10">Not available</Badge>
                     )}
                   </div>
                   <div className="p-5">

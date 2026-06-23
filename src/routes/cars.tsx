@@ -46,7 +46,7 @@ function CarsPage() {
   const ITEMS_PER_PAGE = 9;
 
   useEffect(() => {
-    supabase.from("cars").select("*").order("created_at", { ascending: false }).then(({ data }) => {
+    supabase.from("cars").select("*").eq("status", "available").order("created_at", { ascending: false }).then(({ data }) => {
       setCars(data ?? []);
       setLoading(false);
     });
@@ -70,12 +70,14 @@ function CarsPage() {
 
       <section id="cars" className="container mx-auto px-4 py-6">
         <div className="sticky top-16 z-40 bg-background pb-2 mb-2">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+          {/*Filtering section*/}
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-1">
             <div className="px-2">
               <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Available</div>
               <h1 className="font-display text-4xl md:text-5xl">Units</h1>
             </div>
             <div className="flex items-center gap-3 flex-wrap">
+              {/* Search section */}
               <div className="relative">
                 <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -86,6 +88,7 @@ function CarsPage() {
                 />
               </div>
               <span className="text-sm text-muted-foreground hidden sm:block">{cars.length} units</span>
+              {/* Sorting section */}
               <Select value={sort} onValueChange={(v) => { setSort(v as typeof sort); setPage(1); }}>
                 <SelectTrigger className="w-[170px]"><SelectValue /></SelectTrigger>
                 <SelectContent>
@@ -131,7 +134,7 @@ function CarsPage() {
             </div>
           </div>
         </div>
-
+        {/* End of filtering div */}
         {loading ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, i) => (
@@ -148,6 +151,7 @@ function CarsPage() {
                   <div className="relative aspect-[4/3] overflow-hidden bg-muted">
                     {(() => {
                       const imgs = (c.images && c.images.length > 0) ? c.images : (c.image_url ? [c.image_url] : []);
+
                       if (imgs.length === 0) {
                         return <div className="flex h-full items-center justify-center text-muted-foreground">No image</div>;
                       }

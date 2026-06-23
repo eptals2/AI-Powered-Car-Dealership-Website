@@ -116,7 +116,7 @@ export function CarsTab({ cars, onRefresh }: { cars: Car[]; onRefresh: () => voi
                   <Button size="sm" variant="ghost" onClick={() => toggleStatus(c)}>
                     {c.status === "available" ? "Suspend" : "Restore"}
                   </Button>
-                  <Button size="sm" variant="destructive" onClick={() => handleDelete(c)}>Delete</Button>
+                  {/* <Button size="sm" variant="destructive" onClick={() => handleDelete(c)}>Delete</Button> */}
                 </TableCell>
               </TableRow>
             ))}

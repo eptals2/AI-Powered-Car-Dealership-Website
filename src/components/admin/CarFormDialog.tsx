@@ -180,10 +180,13 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
                 <SelectItem value="Purple">Purple</SelectItem>
                 <SelectItem value="Biege">Biege</SelectItem>
                 <SelectItem value="Orange">Orange</SelectItem>
+                <SelectItem value="Violet">Violet</SelectItem>
+                <SelectItem value="Green">Green</SelectItem>
                 <SelectItem value="Metallic-Gray">Mettalic Gray</SelectItem>
                 <SelectItem value="Black-White">Black-White</SelectItem>
                 <SelectItem value="Black-Biege">Black-Biege</SelectItem>
                 <SelectItem value="Black-Yellow">Black-Yellow</SelectItem>
+                <SelectItem value="Black-Green">Black-Green</SelectItem>
               </SelectContent>
             </Select>
           </div>

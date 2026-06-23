@@ -72,7 +72,7 @@ function CarsPage() {
         <div className="sticky top-16 z-40 bg-background pb-2 mb-2">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <div className="px-2">
-              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">ALL</div>
+              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Available</div>
               <h1 className="font-display text-4xl md:text-5xl">Units</h1>
             </div>
             <div className="flex items-center gap-3 flex-wrap">
@@ -177,11 +177,11 @@ function CarsPage() {
                     {
                       c.category === "surplus" ? (
                         <h3 className="font-display text-xl md:text-2xl font-semibold leading-tight tracking-tight">
-                          {c.type} {c.name} {c.wheel_drive} {c.transmission} transmission
+                          {c.type} {c.name} {c.wheel_drive} {c.transmission} 
                         </h3>
                       ) : (
                         <h3 className="font-display text-xl md:text-2xl font-semibold leading-tight tracking-tight">
-                          {c.brand} {c.name} {c.transmission} transmission
+                          {c.brand} {c.name} {c.transmission}
                         </h3>
                       )
                     }

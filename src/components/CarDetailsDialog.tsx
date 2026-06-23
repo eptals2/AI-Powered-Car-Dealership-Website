@@ -76,14 +76,14 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
                   return <div className="flex h-64 items-center justify-center text-muted-foreground">No image</div>;
                 }
                 if (imgs.length === 1) {
-                  return <img src={imgs[0]} alt={car.name} className="h-64 w-full object-cover md:h-full" />;
+                  return <img src={imgs[0]} alt={car.name} className="h-100 w-full object-cover md:h-full" />;
                 }
                 return (
                   <Carousel className="h-full w-full" opts={{ loop: true }}>
                     <CarouselContent className="ml-0">
                       {imgs.map((src, i) => (
                         <CarouselItem key={i} className="pl-0">
-                          <img src={src} alt={`${car.name} ${i + 1}`} className="h-64 w-full object-cover md:h-full" />
+                          <img src={src} alt={`${car.name} ${i + 1}`} className="h-100 w-full object-cover md:h-full" />
                         </CarouselItem>
                       ))}
                     </CarouselContent>

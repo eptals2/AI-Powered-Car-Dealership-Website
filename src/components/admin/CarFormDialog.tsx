@@ -41,7 +41,6 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
-    const brand = String(fd.get("brand")).trim();
     const name = String(fd.get("name")).trim();
     const price = Number(fd.get("price"));
     const year_model = String(fd.get("year_model")).trim();
@@ -70,7 +69,6 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
     const image_url = images[0] ?? null;
 
     const payload = {
-      brand,
       name,
       price,
       description,
@@ -99,29 +97,32 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
       <form onSubmit={onSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           <div>
-            <Label>Brand</Label>
-            <Select name="brand" required defaultValue={car?.brand ?? undefined}>
+            <Label htmlFor="name">Brand Name/Series</Label>
+            <Select name="name" required defaultValue={car?.name ?? undefined}>
               <SelectTrigger>
-                <SelectValue placeholder="Select brand" />
+                <SelectValue placeholder="Select brand name/series" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Suzuki">Suzuki</SelectItem>
-                <SelectItem value="Toyota">Toyota</SelectItem>
-                <SelectItem value="Mitsubishi">Mitsubishi</SelectItem>
-                <SelectItem value="Hyundai">Hyundai</SelectItem>
-                <SelectItem value="Nissan">Nissan</SelectItem>
-                <SelectItem value="Honda">Honda</SelectItem>
-                <SelectItem value="Ford">Ford</SelectItem>
+                <SelectItem value="Suzuki DA64V">Suzuki DA64V</SelectItem>
+                <SelectItem value="Suzuki DA64W">Suzuki DA64W</SelectItem>
+                <SelectItem value="Suzuki DA64W (Smiley Edition)">Suzuki DA64W (Smiley Edition)</SelectItem>
+                <SelectItem value="Suzuki DA17V">Suzuki DA17V</SelectItem>
+                <SelectItem value="Suzuki DA17W">Suzuki DA17W</SelectItem>
+                <SelectItem value="Suzuki DA63T">Suzuki DA63T</SelectItem>
+                <SelectItem value="Toyota Vios">Toyota Vios</SelectItem>
+                <SelectItem value="Mitsubishi Mirage">Mitsubishi Mirage</SelectItem>
+                <SelectItem value="Hyundai Accent">Hyundai Accent</SelectItem>
+                <SelectItem value="Toyota Wigo">Toyota Wigo</SelectItem>
+                <SelectItem value="Ford Ranger">Ford Ranger</SelectItem>
+                <SelectItem value="Ford Ranger-Wildtrak">Ford Ranger-Wildtrak</SelectItem>
+                <SelectItem value="Ford Ranger-Raptor">Ford Ranger-Raptor</SelectItem>
+                <SelectItem value="Ford Fiesta">Ford Fiesta</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <div>
-            <Label htmlFor="name">Name</Label>
-            <Input id="name" name="name" required defaultValue={car?.name ?? ""} maxLength={150} />
-          </div>
-          <div>
             <Label htmlFor="price">Price (PHP)</Label>
-            <Input id="price" name="price" type="number" required defaultValue={car?.price ?? ""} />
+            <Input id="price" name="price" type="number" placeholder="Enter price" required defaultValue={car?.price ?? ""} />
           </div>
           <div>
             <Label htmlFor="year_model">Year Model</Label>
@@ -195,7 +196,7 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
               <SelectContent>
                 <SelectItem value="Automatic">Automatic</SelectItem>
                 <SelectItem value="Manual">Manual</SelectItem>
-                <SelectItem value="Hybrid">Hybrid</SelectItem>
+                <SelectItem value="Hybrid">Tiptronic</SelectItem>
               </SelectContent>
             </Select>
           </div>

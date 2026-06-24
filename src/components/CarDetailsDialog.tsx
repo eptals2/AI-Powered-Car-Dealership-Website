@@ -24,9 +24,9 @@ const inquirySchema = z.object({
 
 export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null; open: boolean; onOpenChange: (v: boolean) => void }) {
   const price = car?.price ? Number(car.price) : 0;
-  const minDp = Math.round(price * 0.106388);
+  const minDp = Math.round(price * 0.106385);
   const maxDp = Math.round(price * 0.6);
-  const addOnRate = 0.3067
+  const addOnRate = 0.306691
 
   const [downpayment, setDownpayment] = useState(minDp);
   const [years, setYears] = useState(3);
@@ -61,7 +61,7 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
                   </h3>
                 ) : (
                   <h3 className="font-display text-xl md:text-2xl font-semibold leading-tight tracking-tight">
-                    {car.brand} {car.name} {car.transmission} transmission
+                    {car.name} {car.transmission} transmission
                   </h3>
                 )
               }
@@ -76,14 +76,14 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
                   return <div className="flex h-64 items-center justify-center text-muted-foreground">No image</div>;
                 }
                 if (imgs.length === 1) {
-                  return <img src={imgs[0]} alt={car.name} className="h-64 w-full object-cover md:h-full" />;
+                  return <img src={imgs[0]} alt={car.name} className="h-100 w-full object-cover md:h-full" />;
                 }
                 return (
                   <Carousel className="h-full w-full" opts={{ loop: true }}>
                     <CarouselContent className="ml-0">
                       {imgs.map((src, i) => (
                         <CarouselItem key={i} className="pl-0">
-                          <img src={src} alt={`${car.name} ${i + 1}`} className="h-64 w-full object-cover md:h-full" />
+                          <img src={src} alt={`${car.name} ${i + 1}`} className="h-100 w-full object-cover md:h-full" />
                         </CarouselItem>
                       ))}
                     </CarouselContent>
@@ -131,7 +131,7 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
                 <div className="rounded-md bg-primary/10 p-3 text-center">
                   <div className="text-xs uppercase tracking-widest text-muted-foreground">Monthly Payment</div>
                   <div className="font-display text-2xl text-primary">{PHP(monthly)}/mo</div>
-                  <div className="text-xs">Note: <strong>Price, Down Payment and Monthly Payment</strong> are only <strong>estimates</strong>, actual costs will be based on <strong>financing's calculation</strong> and may change without prior notice.</div>
+                  <div className="text-xs">Note: <strong>Monthly and Down Payment</strong> are only <strong>estimates</strong>, actual DP and Monthly may vary per <strong>financing's calculation</strong> and may change without prior notice.</div>
                 </div>
               </div>
             </div>

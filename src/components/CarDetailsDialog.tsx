@@ -61,7 +61,7 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
                   </h3>
                 ) : (
                   <h3 className="font-display text-xl md:text-2xl font-semibold leading-tight tracking-tight">
-                    {car.brand} {car.name} {car.transmission} transmission
+                    {car.name} {car.transmission} transmission
                   </h3>
                 )
               }

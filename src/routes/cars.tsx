@@ -185,7 +185,7 @@ function CarsPage() {
                         </h3>
                       ) : (
                         <h3 className="font-display text-xl md:text-2xl font-semibold leading-tight tracking-tight">
-                          {c.brand} {c.name} {c.transmission}
+                          {c.name} {c.transmission}
                         </h3>
                       )
                     }

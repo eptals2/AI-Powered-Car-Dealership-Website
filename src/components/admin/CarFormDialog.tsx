@@ -199,7 +199,7 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
               <SelectContent>
                 <SelectItem value="Automatic">Automatic</SelectItem>
                 <SelectItem value="Manual">Manual</SelectItem>
-                <SelectItem value="Hybrid">Tiptronic</SelectItem>
+                <SelectItem value="Tiptronic">Tiptronic</SelectItem>
               </SelectContent>
             </Select>
           </div>

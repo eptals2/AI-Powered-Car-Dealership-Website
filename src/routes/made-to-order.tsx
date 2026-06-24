@@ -95,7 +95,7 @@ function MadeToOrderPage() {
                 <Truck className="h-4 w-4" /> Minitrucks ({designs.filter((d) => d.category === "minitruck").length})
               </TabsTrigger>
             </TabsList>
-            {/* {totalPages > 1 && (
+            {totalPages > 1 && (
               <div className="flex items-center justify-center gap-2 mb-2 mt-0">
                 <Button
                   variant="outline"
@@ -117,7 +117,7 @@ function MadeToOrderPage() {
                   Next
                 </Button>
               </div>
-            )} */}
+            )}
 
             <TabsContent value={tab}>
               {loading ? (

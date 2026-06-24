@@ -86,14 +86,17 @@ export function CarsTab({ cars, onRefresh }: { cars: Car[]; onRefresh: () => voi
               <TableRow key={c.id}>
                 <TableCell className="font-small">{String(c.id).slice(-5)}</TableCell>
                 <TableCell className="font-small">
-                  {c.brand} {c.name} {c.category === "commercial" ? c.year_model : ""} {c.color} {c.accessories?.length ? (
+                  {c.brand} {c.name} {c.category === "commercial" ? c.year_model : ""} {c.accessories?.length ? (
                     <>
                       <span className="font-small text-foreground">with</span>{" "}
                       {c.accessories.join(" • ")}
                     </>
                   ) : c.category === "surplus" && (
-                    <span className="">Basic Setup</span>
+                    <span className="">Basic Setup</span> 
                   )}
+                  <span> {c.transmission} </span>
+                  <span> {c.wheel_drive} </span>
+                  <span> {c.color} </span>
                 </TableCell>
                 <TableCell>
                   {c.category
@@ -113,7 +116,7 @@ export function CarsTab({ cars, onRefresh }: { cars: Car[]; onRefresh: () => voi
                   <Button size="sm" variant="ghost" onClick={() => toggleStatus(c)}>
                     {c.status === "available" ? "Suspend" : "Restore"}
                   </Button>
-                  <Button size="sm" variant="destructive" onClick={() => handleDelete(c)}>Delete</Button>
+                  {/* <Button size="sm" variant="destructive" onClick={() => handleDelete(c)}>Delete</Button> */}
                 </TableCell>
               </TableRow>
             ))}

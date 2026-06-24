@@ -6,12 +6,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
-const TYPES = [
-    { value: "feedback", label: "Feedback", icon: "👍" },
-    { value: "complaint", label: "Complaint", icon: "⚠️" },
-    { value: "inquiry", label: "Inquiry", icon: "❓" },
-] as const;
-
 export function FeedbackForm() {
     const [rating, setRating] = useState(3);
     const [hover, setHover] = useState(0);
@@ -44,9 +38,9 @@ export function FeedbackForm() {
             <p className="text-2xl">✅</p>
             <p className="font-medium">Thank you for reaching out!</p>
             <p className="text-sm text-muted-foreground">We'll get back to you within 24 hours.</p>
-            <Button variant="default" onClick={() => { setDone(false); setForm({ name: "", email: "", subject: "", message: "" }); }}>
+            {/* <Button variant="default" onClick={() => { setDone(false); setForm({ name: "", email: "", subject: "", message: "" }); }}>
                 Submit another
-            </Button>
+            </Button> */}
         </div>
     );
 
@@ -54,7 +48,6 @@ export function FeedbackForm() {
         <div className="">
             <div>
                 <p className="font-medium text-xl">Kindly leave us a review</p>
-                {/* <p className="text-xl text-muted-foreground">All submissions are reviewed within 24 hours</p> */}
             </div>
 
             <div className="space-y-2">
@@ -62,26 +55,6 @@ export function FeedbackForm() {
                     <div><Label>Full name *</Label><Input value={form.name} onChange={set("name")} placeholder="Juan dela Cruz" /></div>
                     <div><Label>Email *</Label><Input type="email" value={form.email} onChange={set("email")} placeholder="juan@email.com" /></div>
                 </div>
-
-                {/* <div>
-            <Label>Type</Label>
-            <div className="grid grid-cols-3 gap-2 mt-1">
-                {TYPES.map(t => (
-                    <button
-                    key={t.value}
-                    onClick={() => setType(t.value)}
-                    className={`py-2 rounded-lg border text-sm transition-colors ${
-                        type === t.value
-                        ? "border-blue-400 bg-blue-50 text-blue-800"
-                        : "border-border bg-muted text-muted-foreground hover:bg-background"
-                    }`}
-                    >
-                    <span className="block text-lg">{t.icon}</span>
-                    {t.label}
-                    </button>
-                ))}
-                </div>
-            </div> */}
             </div>
 
             <div>

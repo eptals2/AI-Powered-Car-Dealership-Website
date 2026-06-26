@@ -1,11 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import { Home, Car, Phone, GalleryVerticalIcon } from "lucide-react";
+import { Home, Car, Phone, ImageIcon } from "lucide-react";
 
 const links = [
   { href: "/#home", label: "Home", icon: Home },
   { href: "/cars", label: "Cars", icon: Car },
   { href: "/#contact", label: "Contact", icon: Phone },
-  { href: "/made-to-order", label: "Gallery", icon: GalleryVerticalIcon },
+  { href: "/catalog", label: "Catalog", icon: ImageIcon },
 ];
 
 export function SiteHeader() {

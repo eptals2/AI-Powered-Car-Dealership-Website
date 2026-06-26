@@ -23,7 +23,7 @@ export function MtoDesignsTab({ designs, onRefresh }: { designs: MtoDesign[]; on
   return (
     <>
       <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
-        <p className="text-sm text-muted-foreground">Manage made-to-order minivan and minitruck designs.</p>
+        <p className="text-sm text-muted-foreground">Manage catalog minivan and minitruck designs.</p>
         <Dialog open={dialogOpen} onOpenChange={(v) => { setDialogOpen(v); if (!v) setEditing(null); }}>
           <DialogTrigger asChild>
             <Button onClick={() => { setEditing(null); setDialogOpen(true); }}>

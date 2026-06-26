@@ -13,6 +13,9 @@
       "name": "staging"
     },
     "prod":{
+      "name": "www"
+    },
+    "app":{
       "name": "app"
     }
   }

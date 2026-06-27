@@ -142,7 +142,6 @@ export function CarDetailsDialog({ car, open, onOpenChange }: { car: Car | null;
               <Button className="w-full" onClick={() => setFormOpen("order")}>Made to Order</Button>
             ) : (
               <>
-                <Button variant="outline" disabled={downpayment < minDp} onClick={() => setFormOpen("quote")}>Get Free Quote</Button>
                 <Button disabled={downpayment < minDp} onClick={() => setFormOpen("reserve")}>Reserve This Unit</Button>
               </>
             ))}

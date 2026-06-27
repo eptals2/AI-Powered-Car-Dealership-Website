@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from "react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,13 +16,13 @@ import type { Tables } from "@/integrations/supabase/types";
 
 type Design = Tables<"made_to_order_designs">;
 
-export const Route = createFileRoute("/made-to-order")({
+export const Route = createFileRoute("/catalog")({
   head: () => ({
     meta: [
-      { title: "Made-to-Order — Eric Car Trading" },
-      { name: "description", content: "Choose your favorite minivan or minitruck design and we'll build it for you." },
-      { property: "og:title", content: "Made-to-Order — Eric Car Trading" },
-      { property: "og:description", content: "Browse our catalog of customizable minivans and minitrucks." },
+      { title: "Catalog — Eric Car Trading" },
+      { name: "description", content: "Choose your favorite design and we'll build it for you." },
+      { property: "og:title", content: "Catalog — Eric Car Trading" },
+      { property: "og:description", content: "Browse our catalog of customizable units." },
     ],
   }),
   component: MadeToOrderPage,
@@ -74,10 +73,10 @@ function MadeToOrderPage() {
       <main className="flex-1">
         <section className="border-b bg-gradient-to-b from-primary/5 to-transparent">
           <div className="container mx-auto px-1 py-7 text-center">
-            <div className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">Made to Order</div>
+            <div className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">Catalog</div>
             <h1 className="font-display text-4xl md:text-5xl mt-2">Choose your design</h1>
             <p className="mt-1 max-w-xl mx-auto text-muted-foreground">
-              Browse our gallery of minivan and minitruck designs. Pick the one you love and we'll build it for you.
+              Browse our catalog of customizable units.
             </p>
           </div>
         </section>

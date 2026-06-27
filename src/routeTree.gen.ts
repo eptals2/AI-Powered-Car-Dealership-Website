@@ -9,7 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as MadeToOrderRouteImport } from './routes/made-to-order'
+import { Route as CatalogRouteImport } from './routes/catalog'
 import { Route as CarsRouteImport } from './routes/cars'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -17,9 +17,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CarsIdRouteImport } from './routes/cars_.$id'
 import { Route as ApiAiCarSearchRouteImport } from './routes/api/ai-car-search'
 
-const MadeToOrderRoute = MadeToOrderRouteImport.update({
-  id: '/made-to-order',
-  path: '/made-to-order',
+const CatalogRoute = CatalogRouteImport.update({
+  id: '/catalog',
+  path: '/catalog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CarsRoute = CarsRouteImport.update({
@@ -58,7 +58,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/cars': typeof CarsRoute
-  '/made-to-order': typeof MadeToOrderRoute
+  '/catalog': typeof CatalogRoute
   '/api/ai-car-search': typeof ApiAiCarSearchRoute
   '/cars/$id': typeof CarsIdRoute
 }
@@ -67,7 +67,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/cars': typeof CarsRoute
-  '/made-to-order': typeof MadeToOrderRoute
+  '/catalog': typeof CatalogRoute
   '/api/ai-car-search': typeof ApiAiCarSearchRoute
   '/cars/$id': typeof CarsIdRoute
 }
@@ -77,7 +77,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/cars': typeof CarsRoute
-  '/made-to-order': typeof MadeToOrderRoute
+  '/catalog': typeof CatalogRoute
   '/api/ai-car-search': typeof ApiAiCarSearchRoute
   '/cars_/$id': typeof CarsIdRoute
 }
@@ -88,7 +88,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/cars'
-    | '/made-to-order'
+    | '/catalog'
     | '/api/ai-car-search'
     | '/cars/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -97,7 +97,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/cars'
-    | '/made-to-order'
+    | '/catalog'
     | '/api/ai-car-search'
     | '/cars/$id'
   id:
@@ -106,7 +106,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/cars'
-    | '/made-to-order'
+    | '/catalog'
     | '/api/ai-car-search'
     | '/cars_/$id'
   fileRoutesById: FileRoutesById
@@ -116,18 +116,18 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
   CarsRoute: typeof CarsRoute
-  MadeToOrderRoute: typeof MadeToOrderRoute
+  CatalogRoute: typeof CatalogRoute
   ApiAiCarSearchRoute: typeof ApiAiCarSearchRoute
   CarsIdRoute: typeof CarsIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/made-to-order': {
-      id: '/made-to-order'
-      path: '/made-to-order'
-      fullPath: '/made-to-order'
-      preLoaderRoute: typeof MadeToOrderRouteImport
+    '/catalog': {
+      id: '/catalog'
+      path: '/catalog'
+      fullPath: '/catalog'
+      preLoaderRoute: typeof CatalogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cars': {
@@ -180,7 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
   CarsRoute: CarsRoute,
-  MadeToOrderRoute: MadeToOrderRoute,
+  CatalogRoute: CatalogRoute,
   ApiAiCarSearchRoute: ApiAiCarSearchRoute,
   CarsIdRoute: CarsIdRoute,
 }

@@ -118,6 +118,7 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
                 <SelectItem value="Ford Ranger-Wildtrak">Ford Ranger-Wildtrak</SelectItem>
                 <SelectItem value="Ford Ranger-Raptor">Ford Ranger-Raptor</SelectItem>
                 <SelectItem value="Ford Fiesta">Ford Fiesta</SelectItem>
+                <SelectItem value="Kia Rio">Kia Rio</SelectItem>
               </SelectContent>
             </Select>
           </div>

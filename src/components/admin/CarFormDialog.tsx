@@ -111,12 +111,14 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
                 <SelectItem value="Suzuki DA63T">Suzuki DA63T</SelectItem>
                 <SelectItem value="Toyota Vios">Toyota Vios</SelectItem>
                 <SelectItem value="Mitsubishi Mirage">Mitsubishi Mirage</SelectItem>
+                <SelectItem value="Mitsubishi L300">Mitsubishi L300</SelectItem>
                 <SelectItem value="Hyundai Accent">Hyundai Accent</SelectItem>
                 <SelectItem value="Toyota Wigo">Toyota Wigo</SelectItem>
                 <SelectItem value="Ford Ranger">Ford Ranger</SelectItem>
                 <SelectItem value="Ford Ranger-Wildtrak">Ford Ranger-Wildtrak</SelectItem>
                 <SelectItem value="Ford Ranger-Raptor">Ford Ranger-Raptor</SelectItem>
                 <SelectItem value="Ford Fiesta">Ford Fiesta</SelectItem>
+                <SelectItem value="Kia Rio">Kia Rio</SelectItem>
               </SelectContent>
             </Select>
           </div>

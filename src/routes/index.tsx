@@ -199,7 +199,7 @@ function Index() {
                 className="w-24 h-24"
               />
               <p className="text-sm text-muted-foreground animate-pulse">
-                Gemini is thinking the best answer for you...
+                Your assistant is thinking the best answer for you...
               </p>
             </div>
           )

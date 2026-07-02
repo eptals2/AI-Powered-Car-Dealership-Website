@@ -234,7 +234,7 @@ function Index() {
                           )}
                         </div>
                         <div className="p-3">
-                          <div className="font-medium text-sm truncate">{car.name}</div>
+                          <div className="font-medium text-sm truncate">{car.name} ({car.year_model})</div>
                           <div className="text-xs text-muted-foreground mt-0.5">PHP {Number(car.price).toLocaleString()}</div>
                         </div>
                       </Link>

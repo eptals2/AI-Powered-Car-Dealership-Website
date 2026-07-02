@@ -9,6 +9,7 @@ export async function getInventory(): Promise<Car[]> {
     const { data, error } = await supabase
         .from("cars")
         .select("*")
+        .eq("status", "available")
         .limit(50);
 
     if (error) {

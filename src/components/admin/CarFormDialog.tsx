@@ -184,6 +184,7 @@ export function CarFormDialog({ car, onSaved }: { car: Car | null; onSaved: () =
                 <SelectItem value="Orange">Orange</SelectItem>
                 <SelectItem value="Violet">Violet</SelectItem>
                 <SelectItem value="Green">Green</SelectItem>
+                <SelectItem value="Brown">Brown</SelectItem>
                 <SelectItem value="Metallic-Gray">Mettalic Gray</SelectItem>
                 <SelectItem value="Black-White">Black-White</SelectItem>
                 <SelectItem value="Black-Biege">Black-Biege</SelectItem>
